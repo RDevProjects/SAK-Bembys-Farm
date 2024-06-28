@@ -4,7 +4,7 @@
 <script src="{{ asset('dashboard/@preline/overlay/index.js') }}"></script>
 <script src="{{ asset('dashboard/js/sidebarmenu.js') }}"></script>
 
-
+@stack('js')
 
 <script src="./assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="{{ asset('dashboard/js/dashboard.js') }}"></script>

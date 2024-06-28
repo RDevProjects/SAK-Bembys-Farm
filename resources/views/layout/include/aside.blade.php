@@ -5,13 +5,14 @@
     <!-- ---------------------------------- -->
     <div class="p-5">
 
-        <a href="../" class="text-nowrap">
-            <img src="./assets/images/logos/dark-logo.svg" alt="Logo-Dark" />
+        <a href="../" class="text-nowrap flex">
+            <img src="{{ asset('logo.png') }}" alt="Logo-Dark" class="w-1/5" />
+            <span class="m-auto font-bold text-lg">Bemby's Farm</span>
         </a>
 
     </div>
     <div class="scroll-sidebar" data-simplebar="">
-        <div class="px-6 mt-8">
+        <div class="px-6 mt-0">
             <nav class=" w-full flex flex-col sidebar-nav">
                 <ul id="sidebarnav" class="text-gray-600 text-sm">
                     <li class="text-xs font-bold pb-4">
@@ -21,7 +22,7 @@
 
                     <li class="sidebar-item">
                         <a class="sidebar-link active gap-3 py-2 px-3 rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
-                            href="./index.html">
+                            href="{{ route('home') }}">
                             <i class="ti ti-layout-dashboard text-xl"></i> <span>Dashboard</span>
                         </a>
                     </li>
