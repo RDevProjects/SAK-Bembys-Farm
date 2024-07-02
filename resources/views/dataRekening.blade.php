@@ -64,6 +64,7 @@
                 <table class="w-1/3 whitespace-nowrap overflow-x-auto" id="dataRekeningTable">
                     <thead class="text-gray-700 bg-gray-50">
                         <tr>
+                            {{-- <th>No</th> --}}
                             <th>Kode Rekening</th>
                             <th>Nama Rekening</th>
                             <th>Kelompok Rekening</th>
@@ -90,7 +91,15 @@
                     url: "{{ route('data-rekening.get') }}",
                     type: 'GET'
                 },
-                columns: [{
+                columns: [
+                    // {
+                    //     data: 'DT_RowIndex',
+                    //     name: 'DT_RowIndex',
+                    //     width: '50px',
+                    //     orderable: false,
+                    //     searchable: false
+                    // },
+                    {
                         data: 'kode_rek',
                         name: 'kode_rek',
                         width: '50px'
