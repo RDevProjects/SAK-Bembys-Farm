@@ -14,5 +14,6 @@
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
 
     @stack('css')
+    @stack('styles')
     <title>{{ env('APP_NAME') }}</title>
 </head>
