@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class TransaksiKeuanganController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('entryData');
+    }
 }

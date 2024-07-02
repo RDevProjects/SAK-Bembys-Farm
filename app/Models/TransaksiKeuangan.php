@@ -25,7 +25,7 @@ class TransaksiKeuangan extends Model
 
     public function kodeRekening()
     {
-        return $this->belongsTo(KodeRekening::class, 'account_number', 'kode_rekening');
+        return $this->belongsTo(KodeRekening::class, 'account_number', 'kode_rek');
     }
 
     public function buktiTransaksi()
