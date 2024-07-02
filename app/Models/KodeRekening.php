@@ -11,10 +11,11 @@ class KodeRekening extends Model
 
     protected $table = 'kode_rekening';
     protected $fillable = [
-        'kode_rekening',
-        'nama_rekening',
-        'kelompok_rekening',
-        'tipe_rekening',
+        'kode_rek',
+        'nama_rek',
+        'kelompok_rek',
+        'tipe_rek',
         'saldo_awal',
     ];
+
 }

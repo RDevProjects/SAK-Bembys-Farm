@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\KodeRekening;
 
 class TransaksiKeuangan extends Model
 {
@@ -21,4 +22,14 @@ class TransaksiKeuangan extends Model
         'debet',
         'kredit',
     ];
+
+    public function kodeRekening()
+    {
+        return $this->belongsTo(KodeRekening::class, 'account_number', 'kode_rekening');
+    }
+
+    public function buktiTransaksi()
+    {
+        return $this->belongsTo(KeteranganTransaksi::class, 'no_trx', 'bukti_transaksi');
+    }
 }

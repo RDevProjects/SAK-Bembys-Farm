@@ -6,5 +6,7 @@
 
 @stack('js')
 
+@stack('scripts')
+
 <script src="./assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="{{ asset('dashboard/js/dashboard.js') }}"></script>

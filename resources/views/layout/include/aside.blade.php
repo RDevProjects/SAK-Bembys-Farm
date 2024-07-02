@@ -21,7 +21,7 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link active gap-3 py-2 px-3 rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        <a class="sidebar-link gap-3 py-2 px-3 rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
                             href="{{ route('home') }}">
                             <i class="ti ti-layout-dashboard text-xl"></i> <span>Dashboard</span>
                         </a>
@@ -34,8 +34,8 @@
 
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
-                            href="./components/buttons.html">
-                            <i class="ti ti-article  text-xl"></i> <span>Buttons</span>
+                            href="{{ route('data-rekening') }}">
+                            <i class="ti ti-article  text-xl"></i> <span>Data Rekening</span>
                         </a>
                     </li>
                 </ul>
