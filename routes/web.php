@@ -13,3 +13,4 @@ Route::get('/data-rekening/get', [KodeRekeningController::class, 'GetDataRekenin
 Route::post('/data-rekening/store', [KodeRekeningController::class, 'store'])->name('data-rekening.store');
 
 Route::get('/entry-jurnal', [TransaksiKeuanganController::class, 'index'])->name('entry-jurnal');
+Route::post('/entry-jurnal/store', [TransaksiKeuanganController::class, 'store'])->name('entry-jurnal.store');

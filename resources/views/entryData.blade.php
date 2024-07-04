@@ -10,7 +10,7 @@
         <div class="card-body">
             <h1 class="block text-xl font-semibold mb-5 text-gray-600">Entry Jurnal</h1>
             <div class="flex">
-                <form action="" method="POST">
+                <form action="{{ route('entry-jurnal.store') }}" method="POST">
                     @csrf
                     <div class="flex gap-3">
                         <div class="flex items-center">
@@ -30,7 +30,7 @@
                     <div class="flex items-center gap-3">
                         <label for="keterangan" class="block text-sm font-semibold my-2 text-gray-600">Keterangan</label>
                         <input type="text" name="keterangan" id="keterangan"
-                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            class="py-2 px-3 block w-5/12 border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
                             placeholder="Keterangan" />
                     </div>
                     <div class="flex gap-3 mt-20">
@@ -90,67 +90,66 @@
                                 class="btn text-sm text-white font-medium w-full hover:bg-blue-700 my-9">Input</button>
                         </div>
                     </div>
-                    {{-- table id_jurnal, no_trx (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
-                    <table class="w-full whitespace-nowrap overflow-x-auto" id="dataRekeningTable">
-                        <thead class="text-gray-700 bg-gray-50">
-                            <tr>
-                                <th>ID Jurnal</th>
-                                <th>No. Transaksi</th>
-                                <th>Kode Rekening</th>
-                                <th>Index Kas</th>
-                                <th>Nama Unit</th>
-                                <th>Index Unit</th>
-                                <th>Debet</th>
-                                <th>Kredit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (['dummy1', 'dummy2', 'dummy3'] as $item)
-                                <tr>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                    <td>{{ $item }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="flex justify-between mt-16">
-                        <div class="flex items-center gap-3 w-1/3">
-                            <button type="submit"
-                                class="btn text-sm p-3 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Jurnal</button>
-                            <button type="button"
-                                class="btn text-sm p-3 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</button>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="">
-                                <label for="balance"
-                                    class="block text-sm font-semibold my-2 text-gray-600">Balance</label>
-                                <input type="text" name="balance" id="balance"
-                                    class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                    placeholder="Balance" disabled />
-                            </div>
-                            <div class="">
-                                <label for="total_debet" class="block text-sm font-semibold my-2 text-gray-600">Total
-                                    Debet</label>
-                                <input type="text" name="total_debet" id="total_debet"
-                                    class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                    placeholder="Total Debet" disabled />
-                            </div>
-                            <div class="">
-                                <label for="total_kredit" class="block text-sm font-semibold my-2 text-gray-600">Total
-                                    Kredit</label>
-                                <input type="text" name="total_kredit" id="total_kredit"
-                                    class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                    placeholder="Total Kredit" disabled />
-                            </div>
-                        </div>
-                    </div>
                 </form>
+            </div>
+            {{-- table id_jurnal, no_trx (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
+            <table class="w-full whitespace-nowrap overflow-x-auto mt-8" id="dataRekeningTable">
+                <thead class="text-gray-700 bg-gray-50">
+                    <tr>
+                        <th>ID Jurnal</th>
+                        <th>No. Transaksi</th>
+                        <th>Kode Rekening</th>
+                        <th>Index Kas</th>
+                        <th>Nama Unit</th>
+                        <th>Index Unit</th>
+                        <th>Debet</th>
+                        <th>Kredit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (['dummy1', 'dummy2', 'dummy3'] as $item)
+                        <tr>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                            <td>{{ $item }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="flex justify-between mt-16">
+                <div class="flex items-center gap-3 w-1/3">
+                    <button type="submit"
+                        class="btn text-sm p-3 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Jurnal</button>
+                    <button type="button"
+                        class="btn text-sm p-3 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</button>
+                </div>
+                <div class="flex gap-3">
+                    <div class="">
+                        <label for="balance" class="block text-sm font-semibold my-2 text-gray-600">Balance</label>
+                        <input type="text" name="balance" id="balance"
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            placeholder="Balance" disabled />
+                    </div>
+                    <div class="">
+                        <label for="total_debet" class="block text-sm font-semibold my-2 text-gray-600">Total
+                            Debet</label>
+                        <input type="text" name="total_debet" id="total_debet"
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            placeholder="Total Debet" disabled />
+                    </div>
+                    <div class="">
+                        <label for="total_kredit" class="block text-sm font-semibold my-2 text-gray-600">Total
+                            Kredit</label>
+                        <input type="text" name="total_kredit" id="total_kredit"
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            placeholder="Total Kredit" disabled />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
