@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\TransaksiKeuangan;
 use Illuminate\Support\Facades\DB;
 use App\Models\KeteranganTransaksi;
+use App\Models\Unit;
 use Yajra\DataTables\DataTables;
 
 class TransaksiKeuanganController extends Controller
@@ -14,7 +15,7 @@ class TransaksiKeuanganController extends Controller
     public function index()
     {
         $kodeRekenings = KodeRekening::select('kode_rek', 'nama_rek')->distinct()->get();
-        $namaUnits = TransaksiKeuangan::select('nama_unit')->distinct()->get();
+        $namaUnits = Unit::select('id_unit' ,'nama_unit')->distinct()->get();
         // menghitung jumlah debet dan kredit dan balance
         $totalDebet = TransaksiKeuangan::sum('debet');
         $totalKredit = TransaksiKeuangan::sum('kredit');
@@ -24,7 +25,7 @@ class TransaksiKeuanganController extends Controller
 
     public function getTransaksiKeuangan(Request $request)
     {
-        $data = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi')->select('transaksi_keuangan.*');
+        $data = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi', 'Unit')->select('transaksi_keuangan.*');
 
         return DataTables::of($data)
             ->addColumn('kode_rek', function($row) {
@@ -38,6 +39,9 @@ class TransaksiKeuanganController extends Controller
             })
             ->addColumn('tanggal_transaksi', function($row) {
                 return $row->buktiTransaksi ? $row->buktiTransaksi->tanggal_transaksi : '';
+            })
+            ->addColumn('nama_unit', function($row) {
+                return $row->Unit ? $row->Unit->nama_unit : '';
             })
             ->make(true);
     }
@@ -59,7 +63,7 @@ class TransaksiKeuanganController extends Controller
             $TransaksiKeuangan->no_akun = $request->bukti_transaksi;
             $TransaksiKeuangan->account_number = $request->account_number;
             $TransaksiKeuangan->index_kas = $request->index_kas;
-            $TransaksiKeuangan->nama_unit = $request->nama_unit;
+            $TransaksiKeuangan->id_unit = $request->id_unit;
             $TransaksiKeuangan->index_unit = $request->index_unit;
             $TransaksiKeuangan->debet = $request->debet ?? 0;
             $TransaksiKeuangan->kredit = $request->kredit ?? 0;
@@ -72,33 +76,6 @@ class TransaksiKeuanganController extends Controller
             return redirect('/entry-jurnal')->with('error', 'Data transaksi gagal ditambahkan!');
         }
 
-    }
-
-    public function showNamaUnit()
-    {
-        return view('inputUnit');
-    }
-
-    public function getNamaUnit()
-    {
-        $namaUnits = TransaksiKeuangan::select('nama_unit')->distinct()->get();
-        return DataTables::of($namaUnits)
-            ->addColumn('action', function($row) {
-                return '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-edit"></i></a>
-                    <a href="' . route('home') . '" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-trash"></i></a>';
-            })
-            ->make(true);
-    }
-
-  public function storeNamaUnit(Request $request)
-    {
-        $validated = $request->validate([
-            'nama_unit' => 'required',
-        ]);
-
-        TransaksiKeuangan::create($validated);
-
-        return redirect()->route('entry-jurnal.storeNamaUnit')->with('status', 'Data transaksi berhasil ditambahkan!');
     }
 
     public function tampilJurnal()

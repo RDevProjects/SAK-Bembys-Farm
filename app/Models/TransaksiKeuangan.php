@@ -32,4 +32,9 @@ class TransaksiKeuangan extends Model
     {
         return $this->belongsTo(KeteranganTransaksi::class, 'no_akun', 'bukti_transaksi');
     }
+
+    public function Unit()
+    {
+        return $this->belongsTo(Unit::class, 'id_unit', 'id_unit');
+    }
 }

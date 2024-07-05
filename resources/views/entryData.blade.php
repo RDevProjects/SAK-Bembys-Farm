@@ -84,12 +84,13 @@
                             </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
-                            <label for="nama_unit" class="block text-sm font-semibold my-2 text-gray-600">Nama Unit</label>
-                            <select name="nama_unit" id="nama_unit"
+                            <label for="id_unit" class="block text-sm font-semibold my-2 text-gray-600">Nama Unit</label>
+                            <select name="id_unit" id="id_unit"
                                 class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
                                 <option value=""></option>
                                 @foreach ($namaUnits as $namaUnit)
-                                    <option value="{{ $namaUnit->nama_unit }}">{{ $namaUnit->nama_unit }}</option>
+                                    <option value="{{ $namaUnit->id_unit }}">{{ $namaUnit->id_unit }} |
+                                        {{ $namaUnit->nama_unit }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -21,7 +21,7 @@ class TransaksiKeuanganFactory extends Factory
             'no_trx' => $this->faker->unique()->numberBetween(1, 8000),
             'account_number' => $this->faker->randomNumber(5),
             'index_kas' => $this->faker->randomNumber(5),
-            'nama_unit' => $this->faker->word,
+            'id_unit' => $this->faker->randomNumber(5),
             'index_unit' => $this->faker->randomNumber(5),
             'debet' => $this->faker->randomNumber(5),
             'kredit' => $this->faker->randomNumber(5),

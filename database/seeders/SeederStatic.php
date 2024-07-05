@@ -6,6 +6,7 @@ use App\Models\KeteranganTransaksi;
 use App\Models\KodeRekening;
 use Illuminate\Database\Seeder;
 use App\Models\TransaksiKeuangan;
+use App\Models\Unit;
 use DateTime;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -30,15 +31,21 @@ class SeederStatic extends Seeder
             'keterangan' => 'Test',
         ]);
 
+        Unit::create([
+            'id_unit' => 1,
+            'nama_unit' => 'Test',
+        ]);
+
         TransaksiKeuangan::create([
             'id_jurnal' => 1,
             'no_akun' => 1000,
             'account_number' => 1000,
             'index_kas' => 1,
-            'nama_unit' => 'Test',
+            'id_unit' => 1,
             'index_unit' => 1,
             'debet' => 1,
             'kredit' => 1,
         ]);
+
     }
 }

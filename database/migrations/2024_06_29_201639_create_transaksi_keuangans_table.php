@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('no_akun', 10);
             $table->string('account_number', 20);
             $table->string('index_kas', 5);
-            $table->string('nama_unit', 50);
+            $table->string('id_unit', 5);
             $table->string('index_unit', 5);
             $table->string('debet', 20);
             $table->string('kredit', 20);
@@ -24,6 +24,7 @@ return new class extends Migration
 
             $table->foreign('no_akun')->references('bukti_transaksi')->on('keterangan_transaksi');
             $table->foreign('account_number')->references('kode_rek')->on('kode_rekening');
+            $table->foreign('id_unit')->references('id_unit')->on('unit');
         });
     }
 
