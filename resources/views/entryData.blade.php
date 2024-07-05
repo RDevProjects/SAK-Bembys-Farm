@@ -14,11 +14,11 @@
                     @csrf
                     <div class="flex gap-3">
                         <div class="flex items-center">
-                            <label for="buku_transaksi" class="block text-sm font-semibold my-2 text-gray-600">Buku
+                            <label for="bukti_transaksi" class="block text-sm font-semibold my-2 text-gray-600">Bukti
                                 Transaksi</label>
-                            <input type="text" name="buku_transaksi" id="buku_transaksi"
+                            <input type="text" name="bukti_transaksi" id="bukti_transaksi"
                                 class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Buku Transaksi" />
+                                placeholder="Bukti Transaksi" />
                         </div>
                         <div class="flex items-center">
                             <label for="tanggal" class="block text-sm font-semibold my-2 text-gray-600">Tanggal</label>
@@ -50,15 +50,23 @@
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="account_number" class="block text-sm font-semibold my-2 text-gray-600">Kode
                                 Rekening</label>
-                            <input type="text" name="account_number" id="account_number"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Kode Rekening" />
+                            <select name="account_number" id="account_number"
+                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0">
+                                <option value="">Kode Rekening</option>
+                                @foreach ($kodeRekenings as $kodeRekening)
+                                    <option value="{{ $kodeRekening->kode_rek }}">{{ $kodeRekening->kode_rek }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="index_kas" class="block text-sm font-semibold my-2 text-gray-600">Index Kas</label>
-                            <input type="text" name="index_kas" id="index_kas"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Index Kas" />
+                            <select name="index_kas" id="index_kas"
+                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0">
+                                <option value="">Index Kas</option>
+                                <option value="1">1 | Arus Kas Dari Kegiatan Operasi</option>
+                                <option value="2">2 | Arus Kas Dari Kegiatan Investasi</option>
+                                <option value="3">3 | Arus Kas Dari Kegiatan Pendanaan</option>
+                            </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="nama_unit" class="block text-sm font-semibold my-2 text-gray-600">Nama Unit</label>
