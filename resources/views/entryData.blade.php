@@ -17,52 +17,53 @@
                             <label for="bukti_transaksi" class="block text-sm font-semibold my-2 text-gray-600">Bukti
                                 Transaksi</label>
                             <input type="text" name="bukti_transaksi" id="bukti_transaksi"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Bukti Transaksi" />
+                                class="ms-6 py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                                placeholder="" />
                         </div>
                         <div class="flex items-center">
                             <label for="tanggal" class="block text-sm font-semibold my-2 text-gray-600">Tanggal</label>
                             <input type="date" name="tanggal" id="tanggal"
                                 class="py-2 px-4 mx-2 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Tanggal" />
+                                placeholder="" />
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <label for="keterangan" class="block text-sm font-semibold my-2 text-gray-600">Keterangan</label>
                         <input type="text" name="keterangan" id="keterangan"
                             class="py-2 px-3 block w-5/12 border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Keterangan" />
+                            placeholder="" />
                     </div>
-                    <div class="flex gap-3 mt-20">
+                    <div class="flex gap-1 mt-20 text-center">
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="id_jurnal" class="block text-sm font-semibold my-2 text-gray-600">ID Jurnal</label>
                             <input type="text" name="id_jurnal" id="id_jurnal"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="ID Jurnal" />
+                                class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
+                                placeholder="" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
-                            <label for="no_trx" class="block text-sm font-semibold my-2 text-gray-600">No.
-                                Transaksi</label>
-                            <input type="text" name="no_trx" id="no_trx"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="No. Transaksi" />
+                            <label for="no_akun" class="block text-sm font-semibold my-2 text-gray-600">No.
+                                Akun</label>
+                            <input type="text" name="no_akun" id="no_akun"
+                                class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
+                                placeholder="" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="account_number" class="block text-sm font-semibold my-2 text-gray-600">Kode
                                 Rekening</label>
                             <select name="account_number" id="account_number"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0">
-                                <option value="">Kode Rekening</option>
+                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
+                                <option value=""></option>
                                 @foreach ($kodeRekenings as $kodeRekening)
-                                    <option value="{{ $kodeRekening->kode_rek }}">{{ $kodeRekening->kode_rek }}</option>
+                                    <option value="{{ $kodeRekening->kode_rek }}">{{ $kodeRekening->kode_rek }} |
+                                        {{ $kodeRekening->nama_rek }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="index_kas" class="block text-sm font-semibold my-2 text-gray-600">Index Kas</label>
                             <select name="index_kas" id="index_kas"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0">
-                                <option value="">Index Kas</option>
+                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
+                                <option value=""></option>
                                 <option value="1">1 | Arus Kas Dari Kegiatan Operasi</option>
                                 <option value="2">2 | Arus Kas Dari Kegiatan Investasi</option>
                                 <option value="3">3 | Arus Kas Dari Kegiatan Pendanaan</option>
@@ -70,28 +71,35 @@
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="nama_unit" class="block text-sm font-semibold my-2 text-gray-600">Nama Unit</label>
-                            <input type="text" name="nama_unit" id="nama_unit"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Nama Unit" />
+                            <select name="nama_unit" id="nama_unit"
+                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
+                                <option value=""></option>
+                                @foreach ($namaUnits as $namaUnit)
+                                    <option value="{{ $namaUnit->nama_unit }}">{{ $namaUnit->nama_unit }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="index_unit" class="block text-sm font-semibold my-2 text-gray-600">Index
                                 Unit</label>
-                            <input type="text" name="index_unit" id="index_unit"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Index Unit" />
+                            <select name="index_unit" id="index_unit"
+                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
+                                <option value=""></option>
+                                <option value="1">1 | Transaksi Masuk</option>
+                                <option value="2">2 | Transaksi Keluar</option>
+                            </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="debet" class="block text-sm font-semibold my-2 text-gray-600">Debet</label>
                             <input type="text" name="debet" id="debet"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Debet" />
+                                class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
+                                placeholder="" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="kredit" class="block text-sm font-semibold my-2 text-gray-600">Kredit</label>
                             <input type="text" name="kredit" id="kredit"
-                                class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="Kredit" />
+                                class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
+                                placeholder="" />
                         </div>
                         <div class="w-fit sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <button type="submit"
@@ -100,7 +108,7 @@
                     </div>
                 </form>
             </div>
-            {{-- table id_jurnal, no_trx (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
+            {{-- table id_jurnal, no_akun (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
             <table class="w-full whitespace-nowrap overflow-x-auto mt-8" id="dataRekeningTable">
                 <thead class="text-gray-700 bg-gray-50">
                     <tr>

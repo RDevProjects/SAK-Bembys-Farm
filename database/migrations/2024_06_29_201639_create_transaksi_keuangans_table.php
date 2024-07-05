@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transaksi_keuangan', function (Blueprint $table) {
             $table->integer('id_jurnal', 10)->autoIncrement()->unique()->primary();
-            $table->string('no_trx', 10);
+            $table->string('no_akun', 10);
             $table->string('account_number', 20);
             $table->string('index_kas', 5);
             $table->string('nama_unit', 50);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('kredit', 20);
             $table->timestamps();
 
-            $table->foreign('no_trx')->references('bukti_transaksi')->on('keterangan_transaksi');
+            $table->foreign('no_akun')->references('bukti_transaksi')->on('keterangan_transaksi');
             $table->foreign('account_number')->references('kode_rek')->on('kode_rekening');
         });
     }

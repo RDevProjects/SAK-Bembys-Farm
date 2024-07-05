@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('kode_rek', 20)->unique()->primary();
             $table->string('nama_rek', 50);
             $table->string('kelompok_rek', 30);
-            $table->string('tipe_rek', 5);
+            $table->string('tipe_rek', 6);
             $table->string('saldo_awal', 20);
             $table->timestamps();
         });

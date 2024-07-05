@@ -32,7 +32,7 @@ class SeederStatic extends Seeder
 
         TransaksiKeuangan::create([
             'id_jurnal' => 1,
-            'no_trx' => 1000,
+            'no_akun' => 1000,
             'account_number' => 1000,
             'index_kas' => 1,
             'nama_unit' => 'Test',

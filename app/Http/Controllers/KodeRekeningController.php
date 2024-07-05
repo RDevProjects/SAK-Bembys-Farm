@@ -24,6 +24,7 @@ class KodeRekeningController extends Controller
 
     public function store(Request $request)
     {
+         dd($request->all());
         $request->validate([
             'kode_rek' => 'required',
             'nama_rek' => 'required',
@@ -31,8 +32,6 @@ class KodeRekeningController extends Controller
             'tipe_rek' => 'required',
             'saldo_awal' => 'required',
         ]);
-
-        // dd($request->all());
 
         KodeRekening::create($request->all());
 

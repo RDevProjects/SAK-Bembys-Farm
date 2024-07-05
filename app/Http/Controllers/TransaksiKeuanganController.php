@@ -12,13 +12,14 @@ class TransaksiKeuanganController extends Controller
 {
     public function index()
     {
-        $kodeRekenings = KodeRekening::all();
-        return view('entryData', compact('kodeRekenings'));
+        $kodeRekenings = KodeRekening::select('kode_rek', 'nama_rek')->distinct()->get();
+        $namaUnits = TransaksiKeuangan::select('nama_unit')->distinct()->get();
+        return view('entryData', compact('kodeRekenings', 'namaUnits'));
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
+         dd($request->all());
         DB::beginTransaction();
 
         try {
@@ -30,7 +31,7 @@ class TransaksiKeuanganController extends Controller
 
             $TransaksiKeuangan = new TransaksiKeuangan();
             $TransaksiKeuangan->id_jurnal = $KeteranganTransaksi->id;
-            $TransaksiKeuangan->no_trx = $request->bukti_transaksi;
+            $TransaksiKeuangan->no_akun = $request->bukti_transaksi;
             $TransaksiKeuangan->account_number = $request->account_number;
             $TransaksiKeuangan->index_kas = $request->index_kas;
             $TransaksiKeuangan->nama_unit = $request->nama_unit;
