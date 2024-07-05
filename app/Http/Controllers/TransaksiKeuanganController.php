@@ -36,6 +36,9 @@ class TransaksiKeuanganController extends Controller
             ->addColumn('keterangan', function($row) {
                 return $row->buktiTransaksi ? $row->buktiTransaksi->keterangan : '';
             })
+            ->addColumn('tanggal_transaksi', function($row) {
+                return $row->buktiTransaksi ? $row->buktiTransaksi->tanggal_transaksi : '';
+            })
             ->make(true);
     }
 
@@ -58,8 +61,8 @@ class TransaksiKeuanganController extends Controller
             $TransaksiKeuangan->index_kas = $request->index_kas;
             $TransaksiKeuangan->nama_unit = $request->nama_unit;
             $TransaksiKeuangan->index_unit = $request->index_unit;
-            $TransaksiKeuangan->debet = $request->debet;
-            $TransaksiKeuangan->kredit = $request->kredit;
+            $TransaksiKeuangan->debet = $request->debet ?? 0;
+            $TransaksiKeuangan->kredit = $request->kredit ?? 0;
             $TransaksiKeuangan->save();
 
             DB::commit();
@@ -69,5 +72,13 @@ class TransaksiKeuanganController extends Controller
             return redirect('/entry-jurnal')->with('error', 'Data transaksi gagal ditambahkan!');
         }
 
+    }
+
+    public function tampilJurnal()
+    {
+        $totalDebet = TransaksiKeuangan::sum('debet');
+        $totalKredit = TransaksiKeuangan::sum('kredit');
+        $totalBalance = $totalDebet - $totalKredit;
+        return view('tampilJurnal', compact('totalDebet', 'totalKredit', 'totalBalance'));
     }
 }

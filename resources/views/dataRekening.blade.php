@@ -150,7 +150,7 @@
                     },
                 ],
                 scrollX: true,
-                scrollY: '50vh',
+                scrollY: '63vh',
                 scroller: true
             });
         });

@@ -142,9 +142,9 @@
             <div class="flex justify-between mt-16">
                 <div class="flex items-center gap-3 w-1/3">
                     <button type="submit"
-                        class="btn text-sm p-3 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Jurnal</button>
-                    <button type="button"
-                        class="btn text-sm p-3 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</button>
+                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Jurnal</button>
+                    <a href="{{ route('tampil-jurnal') }}"
+                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</a>
                 </div>
                 <div class="flex gap-3">
                     <div class="">
@@ -231,7 +231,7 @@
                     },
                 ],
                 scrollX: true,
-                scrollY: '50vh',
+                scrollY: true,
                 scroller: true
             });
         });
