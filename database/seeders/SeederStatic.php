@@ -20,7 +20,7 @@ class SeederStatic extends Seeder
             'kode_rek' => 1000,
             'nama_rek' => 'Test',
             'kelompok_rek' => 'Test',
-            'tipe_rek' => 'Ut.',
+            'tipe_rek' => 'DEBET',
             'saldo_awal' => '15000',
         ]);
 

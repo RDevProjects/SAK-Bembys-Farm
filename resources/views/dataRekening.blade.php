@@ -104,6 +104,9 @@
                     url: "{{ route('data-rekening.get') }}",
                     type: 'GET'
                 },
+                order: [
+                    [0, 'desc']
+                ],
                 columns: [
                     // {
                     //     data: 'DT_RowIndex',
