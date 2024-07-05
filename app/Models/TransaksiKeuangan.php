@@ -14,7 +14,7 @@ class TransaksiKeuangan extends Model
 
     protected $fillable = [
         'id_jurnal',
-        'no_trx',
+        'no_akun',
         'account_number',
         'index_kas',
         'nama_unit',
@@ -30,6 +30,6 @@ class TransaksiKeuangan extends Model
 
     public function buktiTransaksi()
     {
-        return $this->belongsTo(KeteranganTransaksi::class, 'no_trx', 'bukti_transaksi');
+        return $this->belongsTo(KeteranganTransaksi::class, 'no_akun', 'bukti_transaksi');
     }
 }

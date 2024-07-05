@@ -3,6 +3,20 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 @endpush
 @push('styles')
+    <style>
+        table.dataTable tbody td {
+            border: 1px solid #dee2e6;
+            font-size: 0.8rem;
+        }
+
+        table.dataTable tbody tr:nth-child(odd) {
+            background-color: white;
+        }
+
+        table.dataTable tbody tr:nth-child(even) {
+            background-color: #edf2f7;
+        }
+    </style>
 @endpush
 @section('content')
     <!-- Main Content -->
@@ -109,33 +123,21 @@
                 </form>
             </div>
             {{-- table id_jurnal, no_akun (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
-            <table class="w-full whitespace-nowrap overflow-x-auto mt-8" id="dataRekeningTable">
+            <table class="w-full whitespace-nowrap overflow-x-auto mt-8" id="dataTransaksiKeuangan">
                 <thead class="text-gray-700 bg-gray-50">
                     <tr>
-                        <th>ID Jurnal</th>
-                        <th>No. Transaksi</th>
-                        <th>Kode Rekening</th>
-                        <th>Index Kas</th>
-                        <th>Nama Unit</th>
-                        <th>Index Unit</th>
-                        <th>Debet</th>
-                        <th>Kredit</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID Jurnal</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Bukti Transaksi</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Keterangan</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Account Number</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama Rekening</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Index Kas</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama Unit</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Index Unit</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Debet</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Kredit</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (['dummy1', 'dummy2', 'dummy3'] as $item)
-                        <tr>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
             <div class="flex justify-between mt-16">
                 <div class="flex items-center gap-3 w-1/3">
@@ -149,21 +151,21 @@
                         <label for="balance" class="block text-sm font-semibold my-2 text-gray-600">Balance</label>
                         <input type="text" name="balance" id="balance"
                             class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Balance" disabled />
+                            placeholder="Balance" value="{{ $totalBalance }}" disabled />
                     </div>
                     <div class="">
                         <label for="total_debet" class="block text-sm font-semibold my-2 text-gray-600">Total
                             Debet</label>
                         <input type="text" name="total_debet" id="total_debet"
                             class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Total Debet" disabled />
+                            placeholder="Total Debet" value="{{ $totalDebet }}" disabled />
                     </div>
                     <div class="">
                         <label for="total_kredit" class="block text-sm font-semibold my-2 text-gray-600">Total
                             Kredit</label>
                         <input type="text" name="total_kredit" id="total_kredit"
                             class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Total Kredit" disabled />
+                            placeholder="Total Kredit" value="{{ $totalKredit }}" disabled />
                     </div>
                 </div>
             </div>
@@ -175,4 +177,63 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dataTransaksiKeuangan').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('entry-jurnal.get') }}",
+                    type: 'GET',
+                },
+                order: [
+                    [0, 'desc']
+                ],
+                columns: [{
+                        data: 'id_jurnal',
+                        name: 'id_jurnal'
+                    },
+                    {
+                        data: 'no_akun',
+                        name: 'no_akun'
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan'
+                    },
+                    {
+                        data: 'account_number',
+                        name: 'account_number'
+                    },
+                    {
+                        data: 'nama_rek',
+                        name: 'nama_rek'
+                    },
+                    {
+                        data: 'index_kas',
+                        name: 'index_kas'
+                    },
+                    {
+                        data: 'nama_unit',
+                        name: 'nama_unit'
+                    },
+                    {
+                        data: 'index_unit',
+                        name: 'index_unit'
+                    },
+                    {
+                        data: 'debet',
+                        name: 'debet'
+                    },
+                    {
+                        data: 'kredit',
+                        name: 'kredit'
+                    },
+                ],
+                scrollX: true,
+                scrollY: '50vh',
+                scroller: true
+            });
+        });
+    </script>
 @endpush

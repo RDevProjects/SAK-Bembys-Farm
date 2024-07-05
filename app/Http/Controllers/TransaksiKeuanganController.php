@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\TransaksiKeuangan;
 use Illuminate\Support\Facades\DB;
 use App\Models\KeteranganTransaksi;
+use Yajra\DataTables\DataTables;
 
 class TransaksiKeuanganController extends Controller
 {
@@ -14,12 +15,33 @@ class TransaksiKeuanganController extends Controller
     {
         $kodeRekenings = KodeRekening::select('kode_rek', 'nama_rek')->distinct()->get();
         $namaUnits = TransaksiKeuangan::select('nama_unit')->distinct()->get();
-        return view('entryData', compact('kodeRekenings', 'namaUnits'));
+        // menghitung jumlah debet dan kredit dan balance
+        $totalDebet = TransaksiKeuangan::sum('debet');
+        $totalKredit = TransaksiKeuangan::sum('kredit');
+        $totalBalance = $totalDebet - $totalKredit;
+        return view('entryData', compact('kodeRekenings', 'namaUnits', 'totalDebet', 'totalKredit', 'totalBalance'));
+    }
+
+    public function getTransaksiKeuangan(Request $request)
+    {
+        $data = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi')->select('transaksi_keuangan.*');
+
+        return DataTables::of($data)
+            ->addColumn('kode_rek', function($row) {
+                return $row->kodeRekening ? $row->kodeRekening->kode_rek : '';
+            })
+            ->addColumn('nama_rek', function($row) {
+                return $row->kodeRekening ? $row->kodeRekening->nama_rek : '';
+            })
+            ->addColumn('keterangan', function($row) {
+                return $row->buktiTransaksi ? $row->buktiTransaksi->keterangan : '';
+            })
+            ->make(true);
     }
 
     public function store(Request $request)
     {
-         dd($request->all());
+        // dd($request->all());
         DB::beginTransaction();
 
         try {

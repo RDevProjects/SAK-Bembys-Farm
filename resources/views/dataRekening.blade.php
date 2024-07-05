@@ -9,6 +9,19 @@
             width: 65%;
             /* Menjadikan tabel terpusat */
         }
+
+        <style>table.dataTable tbody td {
+            border: 1px solid #dee2e6;
+            font-size: 0.8rem;
+        }
+
+        table.dataTable tbody tr:nth-child(odd) {
+            background-color: white;
+        }
+
+        table.dataTable tbody tr:nth-child(even) {
+            background-color: #edf2f7;
+        }
     </style>
 @endpush
 @section('content')
