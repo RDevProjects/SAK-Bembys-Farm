@@ -74,6 +74,33 @@ class TransaksiKeuanganController extends Controller
 
     }
 
+    public function showNamaUnit()
+    {
+        return view('inputUnit');
+    }
+
+    public function getNamaUnit()
+    {
+        $namaUnits = TransaksiKeuangan::select('nama_unit')->distinct()->get();
+        return DataTables::of($namaUnits)
+            ->addColumn('action', function($row) {
+                return '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-edit"></i></a>
+                    <a href="' . route('home') . '" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-trash"></i></a>';
+            })
+            ->make(true);
+    }
+
+  public function storeNamaUnit(Request $request)
+    {
+        $validated = $request->validate([
+            'nama_unit' => 'required',
+        ]);
+
+        TransaksiKeuangan::create($validated);
+
+        return redirect()->route('entry-jurnal.storeNamaUnit')->with('status', 'Data transaksi berhasil ditambahkan!');
+    }
+
     public function tampilJurnal()
     {
         $totalDebet = TransaksiKeuangan::sum('debet');
