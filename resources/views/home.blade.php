@@ -8,78 +8,83 @@
                     <div class="sm:flex block justify-between mb-5">
                         <h4 class="text-gray-600 text-lg font-semibold sm:mb-0 mb-2">Sales Overview
                         </h4>
-                        <select name="cars" id="cars"
-                            class=" border-gray-400 text-gray-500 rounded-md text-sm border-[1px] focus:ring-0 sm:w-auto w-full">
-                            <option value="volvo">March2023</option>
-                            <option value="saab">April2023</option>
-                            <option value="mercedes">May2023</option>
-                            <option value="audi">June2023</option>
-                        </select>
                     </div>
-                    <div id="chart"></div>
+                    <div class="">
+                        <div class="grid grid-cols-3 gap-4">
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 1</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 2</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 3</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 4</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 5</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 6</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 7</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 8</a>
+                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 9</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="flex flex-col gap-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="text-gray-600 text-lg font-semibold mb-5">Yearly Breakup</h4>
-                    <div class="flex gap-6 items-center justify-between">
-                        <div class="flex flex-col gap-4">
-                            <h3 class="text-[21px] font-semibold text-gray-600">$36,358</h3>
+    <div class="flex flex-col gap-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-gray-600 text-lg font-semibold mb-5">Yearly Breakup</h4>
+                <div class="flex gap-6 items-center justify-between">
+                    <div class="flex flex-col gap-4">
+                        <h3 class="text-[21px] font-semibold text-gray-600">$36,358</h3>
+                        <div class="flex items-center gap-1">
+                            <span class="flex items-center justify-center w-5 h-5 rounded-full bg-teal-400">
+                                <i class="ti ti-arrow-up-left text-teal-500"></i>
+                            </span>
+                            <p class="text-gray-600 text-sm font-normal ">+9%</p>
+                            <p class="text-gray-500 text-sm font-normal text-nowrap">last year
+                            </p>
+                        </div>
+                        <div class="flex">
+                            <div class="flex gap-2 items-center">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                                <p class="text-gray-500 font-normal text-xs">2023</p>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                <p class="text-gray-500 font-normal text-xs">2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex  items-center">
+                        <div id="breakup"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="flex gap-6 items-center justify-between">
+                    <div class="flex flex-col gap-5">
+                        <h4 class="text-gray-600 text-lg font-semibold">Monthly Earnings</h4>
+                        <div class="flex flex-col gap-[18px]">
+                            <h3 class="text-[21px] font-semibold text-gray-600">$6,820</h3>
                             <div class="flex items-center gap-1">
-                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-teal-400">
-                                    <i class="ti ti-arrow-up-left text-teal-500"></i>
+                                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-400">
+                                    <i class="ti ti-arrow-down-right text-red-500"></i>
                                 </span>
                                 <p class="text-gray-600 text-sm font-normal ">+9%</p>
-                                <p class="text-gray-500 text-sm font-normal text-nowrap">last year
-                                </p>
+                                <p class="text-gray-500 text-sm font-normal">last year</p>
                             </div>
-                            <div class="flex">
-                                <div class="flex gap-2 items-center">
-                                    <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                                    <p class="text-gray-500 font-normal text-xs">2023</p>
-                                </div>
-                                <div class="flex gap-2 items-center">
-                                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                                    <p class="text-gray-500 font-normal text-xs">2023</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex  items-center">
-                            <div id="breakup"></div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="flex gap-6 items-center justify-between">
-                        <div class="flex flex-col gap-5">
-                            <h4 class="text-gray-600 text-lg font-semibold">Monthly Earnings</h4>
-                            <div class="flex flex-col gap-[18px]">
-                                <h3 class="text-[21px] font-semibold text-gray-600">$6,820</h3>
-                                <div class="flex items-center gap-1">
-                                    <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-400">
-                                        <i class="ti ti-arrow-down-right text-red-500"></i>
-                                    </span>
-                                    <p class="text-gray-600 text-sm font-normal ">+9%</p>
-                                    <p class="text-gray-500 text-sm font-normal">last year</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div
-                            class="w-11 h-11 flex justify-center items-center rounded-full bg-cyan-500 text-white self-start">
-                            <i class="ti ti-currency-dollar text-xl"></i>
-                        </div>
-
+                    <div class="w-11 h-11 flex justify-center items-center rounded-full bg-cyan-500 text-white self-start">
+                        <i class="ti ti-currency-dollar text-xl"></i>
                     </div>
+
                 </div>
-                <div id="earning"></div>
             </div>
+            <div id="earning"></div>
         </div>
+    </div>
 
 
     </div>

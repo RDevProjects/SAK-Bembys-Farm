@@ -39,16 +39,16 @@
                         <select name="kelompok_rek" id="kelompok_rek"
                             class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0">
                             <option value="">Kelompok Rekening</option>
-                            <option value="11">11 | Aktiva Lancar</option>
-                            <option value="12">12 | Aktiva Tetap</option>
-                            <option value="13">13 | Aktiva Lain-Lain</option>
-                            <option value="21">21 | Hutang Jangka Pendek</option>
-                            <option value="22">22 | Hutang Jangka Panjang</option>
-                            <option value="3">3 | Modal</option>
-                            <option value="4">4 | Pendapatan</option>
-                            <option value="5">5 | Beban</option>
-                            <option value="6">6 | Pendapatan Lain-lain</option>
-                            <option value="7">7 | Beban Lain-lain</option>
+                            <option value="Aktiva Lancar">11 | Aktiva Lancar</option>
+                            <option value="Aktiva Tetap">12 | Aktiva Tetap</option>
+                            <option value="Aktiva Lain-Lain">13 | Aktiva Lain-Lain</option>
+                            <option value="Hutang Jangka Pendek">21 | Hutang Jangka Pendek</option>
+                            <option value="Hutang Jangka Panjang">22 | Hutang Jangka Panjang</option>
+                            <option value="Modal">3 | Modal</option>
+                            <option value="Pendapatan">4 | Pendapatan</option>
+                            <option value="Beban">5 | Beban</option>
+                            <option value="Pendapatan Lain-lain">6 | Pendapatan Lain-lain</option>
+                            <option value="Beban Lain-lain">7 | Beban Lain-lain</option>
                         </select>
                     </div>
                     <div>
@@ -70,6 +70,7 @@
                             class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0">
                             <option value="">Tipe Rekening</option>
                             <option value="DEBET">Debet</option>
+                            <option value="KREDIT">Kredit</option>
                         </select>
                     </div>
                     <div>
