@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KodeRekeningController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\TransaksiKeuanganController;
 use App\Http\Controllers\UnitController;
 
@@ -22,3 +23,7 @@ Route::get('/entry-jurnal/getNamaUnit', [UnitController::class, 'getNamaUnit'])-
 Route::post('/entry-jurnal/storeNamaUnit', [UnitController::class, 'store'])->name('entry-jurnal.storeNamaUnit');
 
 Route::get('/tampil-jurnal', [TransaksiKeuanganController::class, 'tampilJurnal'])->name('tampil-jurnal');
+
+// Laporan
+Route::get('/laporan-jurnal-umum', [LaporanController::class, 'indexJurnalUmum'])->name('laporan-jurnal-umum');
+Route::get('/laporan-jurnal-umum/get', [LaporanController::class, 'getDataJurnalUmum'])->name('laporan-jurnal-umum.get');

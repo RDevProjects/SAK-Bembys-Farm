@@ -11,7 +11,8 @@
                     </div>
                     <div class="">
                         <div class="grid grid-cols-3 gap-4">
-                            <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 1</a>
+                            <a href="{{ route('laporan-jurnal-umum') }}"
+                                class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Jurnal Umum</a>
                             <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 2</a>
                             <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 3</a>
                             <a href="#" class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 4</a>
