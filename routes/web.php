@@ -10,6 +10,8 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/test', [LaporanController::class, 'getDataJurnalUmumJson'])->name('test');
+
 Route::get('/data-rekening', [KodeRekeningController::class, 'index'])->name('data-rekening');
 Route::get('/data-rekening/get', [KodeRekeningController::class, 'GetDataRekening'])->name('data-rekening.get');
 Route::post('/data-rekening/store', [KodeRekeningController::class, 'store'])->name('data-rekening.store');
@@ -27,3 +29,8 @@ Route::get('/tampil-jurnal', [TransaksiKeuanganController::class, 'tampilJurnal'
 // Laporan
 Route::get('/laporan-jurnal-umum', [LaporanController::class, 'indexJurnalUmum'])->name('laporan-jurnal-umum');
 Route::get('/laporan-jurnal-umum/get', [LaporanController::class, 'getDataJurnalUmum'])->name('laporan-jurnal-umum.get');
+
+Route::get('/laporan-buku-besar', [LaporanController::class, 'getDataBukuBesar'])->name('laporan-buku-besar');
+
+
+Route::get('/laporan-neraca-saldo', [LaporanController::class, 'indexNeracaSaldo'])->name('laporan-neraca-saldo');

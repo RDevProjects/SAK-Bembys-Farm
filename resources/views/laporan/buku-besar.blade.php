@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal Umum</title>
+    <title>BUKU BESAR</title>
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
 </head>
 
@@ -16,8 +16,30 @@
             <p>Jl. KH. Samanhudi No. 84-86 Mangkunyudan, Solo</p> --}}
             <hr class="border-t-2 border-gray-900 my-1">
             <hr class="border-t-4 border-gray-900">
-            <h3 class="font-bold text-lg mt-4">JURNAL UMUM</h3>
+            <h3 class="font-bold text-lg mt-4">BUKU BESAR</h3>
             <p class="mb-5">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
+        </div>
+        <div class="mx-auto w-10/12 my-4">
+            <div class="flex items-center mb-2">
+                <label for="kode_rek" class="mr-2 font-bold">KODE REK :</label>
+                {{-- {{ $kode_rek }} --}}
+                </select>
+            </div>
+
+            <div class="flex items-center mb-2">
+                <label for="nama_rek" class="mr-2 font-bold">NAMA REK :</label>
+                {{-- {{ $nama_rek }} --}}
+            </div>
+
+            <div class="flex items-center mb-2">
+                <label for="saldo_awal" class="mr-2 font-bold">SALDO AWAL :</label>
+                {{-- {{ $saldo_awal }} --}}
+            </div>
+
+            <div class="flex items-center mb-2">
+                <label for="tipe_rek" class="mr-2 font-bold">TIPE REK :</label>
+                {{-- {{ $tipe_rek }} --}}
+            </div>
         </div>
         <table class="mx-auto w-10/12 bg-white border border-black">
             <thead>
