@@ -17,8 +17,8 @@
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Buku Besar</a>
                             <a href="{{ route('laporan-neraca-saldo') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Neraca Saldo</a>
-                            <a href="#" target="_blank"
-                                class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 4</a>
+                            <a href="{{ route('laporan-laba-rugi') }}" target="_blank"
+                                class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Laba Rugi</a>
                             <a href="#" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 5</a>
                             <a href="#" target="_blank"

@@ -54,6 +54,27 @@ class LaporanController extends Controller
          return view('laporan.neraca-saldo', compact('data'));
     }
 
+    public function indexLabaRugi()
+    {
+        $dataPendapatan = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
+            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan', 'kode_rekening.kode_rek', 'kode_rekening.nama_rek', 'transaksi_keuangan.debet', 'transaksi_keuangan.kredit')
+            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
+            ->join('kode_rekening', 'transaksi_keuangan.account_number', '=', 'kode_rekening.kode_rek')
+            ->where('transaksi_keuangan.index_unit', 1)
+            ->orderBy('kode_rekening.kode_rek', 'asc')
+            ->get();
+
+        $dataBiaya = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
+            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan', 'kode_rekening.kode_rek', 'kode_rekening.nama_rek', 'transaksi_keuangan.debet', 'transaksi_keuangan.kredit')
+            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
+            ->join('kode_rekening', 'transaksi_keuangan.account_number', '=', 'kode_rekening.kode_rek')
+            ->where('transaksi_keuangan.index_unit', 0)
+            ->orderBy('kode_rekening.kode_rek', 'asc')
+            ->get();
+        // return response()->json($data);
+         return view('laporan.laba-rugi', compact('dataPendapatan', 'dataBiaya'));
+    }
+
 
 
     public function getDataJurnalUmumJson()

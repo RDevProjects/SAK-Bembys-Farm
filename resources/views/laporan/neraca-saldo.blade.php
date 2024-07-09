@@ -36,13 +36,13 @@
                         <td class="border border-black px-4 py-0.5 text-end">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
-                                {{ $item->debet }}
+                                {{ number_format($item->debet, 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="border border-black px-4 py-0.5 text-end">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
-                                {{ $item->kredit }}
+                                {{ number_format($item->kredit, 0, ',', '.') }}
                             </div>
                         </td>
                     </tr>
@@ -52,13 +52,13 @@
                     <td class="border border-black px-4 py-1 text-end font-bold">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ $data->sum('debet') }}
+                            {{ number_format($data->sum('debet'), 0, ',', '.') }}
                         </div>
                     </td>
                     <td class="border border-black px-4 py-1 text-end font-bold">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ $data->sum('kredit') }}
+                            {{ number_format($data->sum('kredit'), 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
