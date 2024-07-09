@@ -137,7 +137,7 @@
                 <td class="px-4 py-1 text-end font-bold">
                     <div class="flex justify-between">
                         <span>Rp.</span>
-                        {{ number_format($dataPendapatan->sum('kredit') - $dataBiaya->sum('kredit'), 0, ',', '.') }}
+                        {{ number_format($dataPendapatan->sum('kredit') - $dataBiaya->sum('debet'), 0, ',', '.') }}
                     </div>
                 </td>
             </tbody>

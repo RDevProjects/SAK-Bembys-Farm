@@ -35,3 +35,5 @@ Route::get('/laporan-buku-besar', [LaporanController::class, 'getDataBukuBesar']
 Route::get('/laporan-neraca-saldo', [LaporanController::class, 'indexNeracaSaldo'])->name('laporan-neraca-saldo');
 
 Route::get('/laporan-laba-rugi', [LaporanController::class, 'indexLabaRugi'])->name('laporan-laba-rugi');
+
+Route::get('/laporan-perubahan-modal', [LaporanController::class, 'indexPerubahanModal'])->name('laporan-perubahan-modal');

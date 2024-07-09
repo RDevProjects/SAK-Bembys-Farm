@@ -17,5 +17,4 @@ class KodeRekening extends Model
         'tipe_rek',
         'saldo_awal',
     ];
-
 }
