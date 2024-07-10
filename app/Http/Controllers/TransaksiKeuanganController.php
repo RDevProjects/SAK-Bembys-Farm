@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Unit;
 use App\Models\KodeRekening;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use App\Models\TransaksiKeuangan;
 use Illuminate\Support\Facades\DB;
 use App\Models\KeteranganTransaksi;
-use App\Models\Unit;
-use Yajra\DataTables\DataTables;
 
 class TransaksiKeuanganController extends Controller
 {
@@ -43,6 +44,12 @@ class TransaksiKeuanganController extends Controller
             ->addColumn('nama_unit', function($row) {
                 return $row->Unit ? $row->Unit->nama_unit : '';
             })
+            // ->addColumn('action', function($row){
+            //     $editUrl = route('entry-jurnal.edit', $row->id_jurnal);
+            //     $deleteUrl = route('entry-jurnal.delete', $row->id_jurnal);
+            //     return '<a href="'.$editUrl.'" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-edit"></i></a>
+            //             <a href="'.$deleteUrl.'" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-trash"></i></a>';
+            // })
             ->make(true);
     }
 
@@ -76,6 +83,46 @@ class TransaksiKeuanganController extends Controller
             return redirect('/entry-jurnal')->with('error', 'Data transaksi gagal ditambahkan!');
         }
 
+    }
+
+    public function edit($id_jurnal)
+    {
+        $transaksi = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi', 'Unit')->find($id_jurnal);
+        $tanggal_transaksi = Carbon::parse($transaksi->buktiTransaksi->tanggal_transaksi)->format('Y-m-d');
+        $kodeRekenings = KodeRekening::select('kode_rek', 'nama_rek')->distinct()->get();
+        $namaUnits = Unit::select('id_unit' ,'nama_unit')->distinct()->get();
+        //dd($transaksi->toArray());
+        //dd($tanggal_transaksi);
+        return view('editEntryData', compact('transaksi', 'kodeRekenings', 'namaUnits', 'tanggal_transaksi'));
+    }
+
+    public function update(Request $request, $id_jurnal)
+    {
+        DB::beginTransaction();
+
+        try {
+            $KeteranganTransaksi = KeteranganTransaksi::find($id_jurnal);
+            $KeteranganTransaksi->bukti_transaksi = $request->bukti_transaksi;
+            $KeteranganTransaksi->tanggal_transaksi = $request->tanggal;
+            $KeteranganTransaksi->keterangan = $request->keterangan;
+            $KeteranganTransaksi->save();
+
+            $TransaksiKeuangan = TransaksiKeuangan::find($id_jurnal);
+            $TransaksiKeuangan->no_akun = $request->bukti_transaksi;
+            $TransaksiKeuangan->account_number = $request->account_number;
+            $TransaksiKeuangan->index_kas = $request->index_kas;
+            $TransaksiKeuangan->id_unit = $request->id_unit;
+            $TransaksiKeuangan->index_unit = $request->index_unit;
+            $TransaksiKeuangan->debet = $request->debet ?? 0;
+            $TransaksiKeuangan->kredit = $request->kredit ?? 0;
+            $TransaksiKeuangan->save();
+
+            DB::commit();
+            return redirect('/entry-jurnal')->with('status', 'Data transaksi berhasil diubah!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect('/entry-jurnal')->with('error', 'Data transaksi gagal diubah!');
+        }
     }
 
     public function tampilJurnal()

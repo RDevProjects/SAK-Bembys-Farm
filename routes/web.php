@@ -21,6 +21,9 @@ Route::put('/data-rekening/update/{id}', [KodeRekeningController::class, 'update
 Route::get('/entry-jurnal', [TransaksiKeuanganController::class, 'index'])->name('entry-jurnal');
 Route::get('/entry-jurnal/get', [TransaksiKeuanganController::class, 'getTransaksiKeuangan'])->name('entry-jurnal.get');
 Route::post('/entry-jurnal/store', [TransaksiKeuanganController::class, 'store'])->name('entry-jurnal.store');
+Route::get('/entry-jurnal/edit/{id}', [TransaksiKeuanganController::class, 'edit'])->name('entry-jurnal.edit');
+Route::put('/entry-jurnal/update/{id}', [TransaksiKeuanganController::class, 'update'])->name('entry-jurnal.update');
+Route::get('/entry-jurnal/delete/{id}', [TransaksiKeuanganController::class, 'destroy'])->name('entry-jurnal.delete');
 
 Route::get('/entry-unit', [UnitController::class, 'index'])->name('entry-jurnal.showNamaUnit');
 Route::get('/entry-unit/getNamaUnit', [UnitController::class, 'getNamaUnit'])->name('entry-jurnal.getNamaUnit');

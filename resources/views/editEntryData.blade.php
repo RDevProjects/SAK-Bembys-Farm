@@ -22,53 +22,57 @@
     <!-- Main Content -->
     <div class="card bg-gray-50">
         <div class="card-body">
-            <h1 class="block text-xl font-semibold mb-5 text-gray-600">Entry Jurnal</h1>
+            <h1 class="block text-xl font-semibold mb-5 text-gray-600">Edit Entry Jurnal</h1>
             <div class="flex">
-                <form action="{{ route('entry-jurnal.store') }}" method="POST">
+                <form action="{{ route('entry-jurnal.update', $transaksi->id_jurnal) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="flex gap-3">
                         <div class="flex items-center">
                             <label for="bukti_transaksi" class="block text-sm font-semibold my-2 text-gray-600">Bukti
                                 Transaksi</label>
                             <input type="text" name="bukti_transaksi" id="bukti_transaksi" maxlength="10"
                                 class="ms-6 py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="" />
+                                placeholder="" value="{{ $transaksi->buktiTransaksi->bukti_transaksi }}" />
                         </div>
                         <div class="flex items-center">
                             <label for="tanggal" class="block text-sm font-semibold my-2 text-gray-600">Tanggal</label>
                             <input type="date" name="tanggal" id="tanggal"
                                 class="py-2 px-4 mx-2 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                                placeholder="" />
+                                placeholder="" value="{{ $tanggal_transaksi }}" />
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <label for="keterangan" class="block text-sm font-semibold my-2 text-gray-600">Keterangan</label>
                         <input type="text" name="keterangan" id="keterangan" maxlength="100"
                             class="py-2 px-3 block w-5/12 border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="" />
+                            placeholder="" value="{{ $transaksi->buktiTransaksi->keterangan }}" />
                     </div>
                     <div class="flex gap-1 mt-20 text-center">
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="id_jurnal" class="block text-sm font-semibold my-2 text-gray-600">ID Jurnal</label>
                             <input type="text" name="id_jurnal" id="id_jurnal" maxlength="5"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
-                                placeholder="" />
+                                placeholder="" value="{{ $transaksi->id_jurnal }}" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="no_akun" class="block text-sm font-semibold my-2 text-gray-600">No.
                                 Akun</label>
                             <input type="text" name="no_akun" id="no_akun" maxlength="10"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
-                                placeholder="" />
+                                placeholder="" value="{{ $transaksi->no_akun }}" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="index_kas" class="block text-sm font-semibold my-2 text-gray-600">Index Kas</label>
                             <select name="index_kas" id="index_kas"
                                 class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
                                 <option value=""></option>
-                                <option value="1">1 | Arus Kas Dari Kegiatan Operasi</option>
-                                <option value="2">2 | Arus Kas Dari Kegiatan Investasi</option>
-                                <option value="3">3 | Arus Kas Dari Kegiatan Pendanaan</option>
+                                <option value="1" {{ $transaksi->index_kas == 1 ? 'selected' : '' }}>1 | Arus Kas Dari
+                                    Kegiatan Operasi</option>
+                                <option value="2" {{ $transaksi->index_kas == 2 ? 'selected' : '' }}>2 | Arus Kas Dari
+                                    Kegiatan Investasi</option>
+                                <option value="3" {{ $transaksi->index_kas == 3 ? 'selected' : '' }}>3 | Arus Kas Dari
+                                    Kegiatan Pendanaan</option>
                             </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
@@ -78,8 +82,9 @@
                                 class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
                                 <option value=""></option>
                                 @foreach ($kodeRekenings as $kodeRekening)
-                                    <option value="{{ $kodeRekening->kode_rek }}">{{ $kodeRekening->kode_rek }} |
-                                        {{ $kodeRekening->nama_rek }}</option>
+                                    <option value="{{ $kodeRekening->kode_rek }}"
+                                        {{ $transaksi->account_number == $kodeRekening->kode_rek ? 'selected' : '' }}>
+                                        {{ $kodeRekening->kode_rek }} | {{ $kodeRekening->nama_rek }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -89,8 +94,9 @@
                                 class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
                                 <option value=""></option>
                                 @foreach ($namaUnits as $namaUnit)
-                                    <option value="{{ $namaUnit->id_unit }}">{{ $namaUnit->id_unit }} |
-                                        {{ $namaUnit->nama_unit }}</option>
+                                    <option value="{{ $namaUnit->id_unit }}"
+                                        {{ $transaksi->id_unit == $namaUnit->id_unit ? 'selected' : '' }}>
+                                        {{ $namaUnit->id_unit }} | {{ $namaUnit->nama_unit }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -100,30 +106,31 @@
                             <select name="index_unit" id="index_unit"
                                 class="py-2 px-3 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0">
                                 <option value=""></option>
-                                <option value="1">1 | Transaksi Masuk</option>
-                                <option value="2">2 | Transaksi Keluar</option>
+                                <option value="1" {{ $transaksi->index_unit == 1 ? 'selected' : '' }}>1 | Transaksi
+                                    Masuk</option>
+                                <option value="2" {{ $transaksi->index_unit == 2 ? 'selected' : '' }}>2 | Transaksi
+                                    Keluar</option>
                             </select>
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="debet" class="block text-sm font-semibold my-2 text-gray-600">Debet</label>
                             <input type="text" name="debet" id="debet" maxlength="20"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
-                                placeholder="" />
+                                placeholder="" value="{{ $transaksi->debet }}" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="kredit" class="block text-sm font-semibold my-2 text-gray-600">Kredit</label>
                             <input type="text" name="kredit" id="kredit" maxlength="20"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
-                                placeholder="" />
+                                placeholder="" value="{{ $transaksi->kredit }}" />
                         </div>
                         <div class="w-fit sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <button type="submit"
-                                class="btn text-sm text-white font-medium w-full hover:bg-blue-700 my-9">Input</button>
+                                class="btn text-sm text-white font-medium w-full hover:bg-blue-700 my-9">Update</button>
                         </div>
                     </div>
                 </form>
             </div>
-            {{-- table id_jurnal, no_akun (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
             <table class="w-full whitespace-nowrap overflow-x-auto mt-8" id="dataTransaksiKeuangan">
                 <thead class="text-gray-700 bg-gray-50">
                     <tr>
@@ -141,36 +148,6 @@
                     </tr>
                 </thead>
             </table>
-            <div class="flex justify-between mt-16">
-                <div class="flex items-center gap-3 w-1/3">
-                    <button type="submit"
-                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Jurnal</button>
-                    <a href="{{ route('tampil-jurnal') }}"
-                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</a>
-                </div>
-                <div class="flex gap-3">
-                    <div class="">
-                        <label for="balance" class="block text-sm font-semibold my-2 text-gray-600">Balance</label>
-                        <input type="text" name="balance" id="balance"
-                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Balance" value="{{ $totalBalance }}" disabled />
-                    </div>
-                    <div class="">
-                        <label for="total_debet" class="block text-sm font-semibold my-2 text-gray-600">Total
-                            Debet</label>
-                        <input type="text" name="total_debet" id="total_debet"
-                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Total Debet" value="{{ $totalDebet }}" disabled />
-                    </div>
-                    <div class="">
-                        <label for="total_kredit" class="block text-sm font-semibold my-2 text-gray-600">Total
-                            Kredit</label>
-                        <input type="text" name="total_kredit" id="total_kredit"
-                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Total Kredit" value="{{ $totalKredit }}" disabled />
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Main Content End -->
