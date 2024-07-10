@@ -10,6 +10,7 @@ class KeteranganTransaksi extends Model
     use HasFactory;
 
     protected $table = 'keterangan_transaksi';
+    protected $primaryKey = 'bukti_transaksi';
 
     protected $fillable = [
         'bukti_transaksi',

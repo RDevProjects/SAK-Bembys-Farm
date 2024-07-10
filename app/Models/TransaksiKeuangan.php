@@ -11,6 +11,7 @@ class TransaksiKeuangan extends Model
     use HasFactory;
 
     protected $table = 'transaksi_keuangan';
+    protected $primaryKey = 'id_jurnal';
 
     protected $fillable = [
         'id_jurnal',

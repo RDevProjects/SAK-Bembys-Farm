@@ -30,7 +30,7 @@
                         <div class="flex items-center">
                             <label for="bukti_transaksi" class="block text-sm font-semibold my-2 text-gray-600">Bukti
                                 Transaksi</label>
-                            <input type="text" name="bukti_transaksi" id="bukti_transaksi"
+                            <input type="text" name="bukti_transaksi" id="bukti_transaksi" maxlength="10"
                                 class="ms-6 py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
                         </div>
@@ -43,21 +43,21 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <label for="keterangan" class="block text-sm font-semibold my-2 text-gray-600">Keterangan</label>
-                        <input type="text" name="keterangan" id="keterangan"
+                        <input type="text" name="keterangan" id="keterangan" maxlength="100"
                             class="py-2 px-3 block w-5/12 border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
                             placeholder="" />
                     </div>
                     <div class="flex gap-1 mt-20 text-center">
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="id_jurnal" class="block text-sm font-semibold my-2 text-gray-600">ID Jurnal</label>
-                            <input type="text" name="id_jurnal" id="id_jurnal"
+                            <input type="text" name="id_jurnal" id="id_jurnal" maxlength="5"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="no_akun" class="block text-sm font-semibold my-2 text-gray-600">No.
                                 Akun</label>
-                            <input type="text" name="no_akun" id="no_akun"
+                            <input type="text" name="no_akun" id="no_akun" maxlength="10"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
                         </div>
@@ -106,13 +106,13 @@
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="debet" class="block text-sm font-semibold my-2 text-gray-600">Debet</label>
-                            <input type="text" name="debet" id="debet"
+                            <input type="text" name="debet" id="debet" maxlength="20"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
                         </div>
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="kredit" class="block text-sm font-semibold my-2 text-gray-600">Kredit</label>
-                            <input type="text" name="kredit" id="kredit"
+                            <input type="text" name="kredit" id="kredit" maxlength="20"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
                         </div>

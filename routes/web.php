@@ -15,14 +15,18 @@ Route::get('/test', [LaporanController::class, 'getDataJurnalUmumJson'])->name('
 Route::get('/data-rekening', [KodeRekeningController::class, 'index'])->name('data-rekening');
 Route::get('/data-rekening/get', [KodeRekeningController::class, 'GetDataRekening'])->name('data-rekening.get');
 Route::post('/data-rekening/store', [KodeRekeningController::class, 'store'])->name('data-rekening.store');
+Route::get('/data-rekening/edit/{id}', [KodeRekeningController::class, 'edit'])->name('data-rekening.edit');
+Route::put('/data-rekening/update/{id}', [KodeRekeningController::class, 'update'])->name('data-rekening.update');
 
 Route::get('/entry-jurnal', [TransaksiKeuanganController::class, 'index'])->name('entry-jurnal');
 Route::get('/entry-jurnal/get', [TransaksiKeuanganController::class, 'getTransaksiKeuangan'])->name('entry-jurnal.get');
 Route::post('/entry-jurnal/store', [TransaksiKeuanganController::class, 'store'])->name('entry-jurnal.store');
 
-Route::get('/entry-jurnal/showNamaUnit', [UnitController::class, 'index'])->name('entry-jurnal.showNamaUnit');
-Route::get('/entry-jurnal/getNamaUnit', [UnitController::class, 'getNamaUnit'])->name('entry-jurnal.getNamaUnit');
-Route::post('/entry-jurnal/storeNamaUnit', [UnitController::class, 'store'])->name('entry-jurnal.storeNamaUnit');
+Route::get('/entry-unit', [UnitController::class, 'index'])->name('entry-jurnal.showNamaUnit');
+Route::get('/entry-unit/getNamaUnit', [UnitController::class, 'getNamaUnit'])->name('entry-jurnal.getNamaUnit');
+Route::post('/entry-unit/storeNamaUnit', [UnitController::class, 'store'])->name('entry-jurnal.storeNamaUnit');
+Route::get('/entry-unit/edit/{id}', [UnitController::class, 'edit'])->name('entry-jurnal.editNamaUnit');
+Route::put('/entry-unit/update/{id}', [UnitController::class, 'update'])->name('entry-jurnal.updateNamaUnit');
 
 Route::get('/tampil-jurnal', [TransaksiKeuanganController::class, 'tampilJurnal'])->name('tampil-jurnal');
 

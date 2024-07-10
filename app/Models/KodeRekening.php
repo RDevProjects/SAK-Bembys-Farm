@@ -10,6 +10,8 @@ class KodeRekening extends Model
     use HasFactory;
 
     protected $table = 'kode_rekening';
+    protected $primaryKey = 'kode_rek';
+
     protected $fillable = [
         'kode_rek',
         'nama_rek',
