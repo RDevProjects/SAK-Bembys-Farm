@@ -21,9 +21,7 @@ class UnitController extends Controller
         return DataTables::of($namaUnits)
             ->addColumn('action', function($row){
                 $editUrl = route('entry-jurnal.editNamaUnit', $row->id_unit);
-                $deleteUrl = route('entry-jurnal.updateNamaUnit', $row->id_unit);
-                return '<a href="'.$editUrl.'" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-edit"></i></a>
-                        <a href="'.$deleteUrl.'" data-id="'.$row->id_unit.'" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-trash"></i></a>';
+                return '<a href="'.$editUrl.'" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-edit"></i></a>';
             })
             ->rawColumns(['action'])
             ->make(true);
