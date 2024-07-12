@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\TransaksiKeuangan;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class LaporanController extends Controller
 {
@@ -121,22 +122,62 @@ class LaporanController extends Controller
 
     public function indexNeraca()
     {
-        $data = KodeRekening::all();
+        // Fetch data for each category
+        $aktivaLancar = $this->getFinancialDataByGroup('Aktiva Lancar');
+        $aktivaLancarTotal = $aktivaLancar->sum('saldo_awal');
 
-        $result = $data->map(function($item) {
-            return [
-                'kode_rek' => $item->kode_rek,
-                'nama_rek' => $item->nama_rek,
-                'debet' => $item->tipe_rek === 'DEBET' ? $item->saldo_awal : 0,
-                'kredit' => $item->tipe_rek === 'KREDIT' ? $item->saldo_awal : 0,
-            ];
+        $aktivaTetap = $this->getFinancialDataByGroup('Aktiva Tetap');
+        $aktivaTetapTotal = $aktivaTetap->sum('saldo_awal');
+
+        $aktivaLainLain = $this->getFinancialDataByGroup('Aktiva Lain-Lain');
+        $aktivaLainLainTotal = $aktivaLainLain->sum('saldo_awal');
+
+        $totalSemua = $aktivaLancarTotal + $aktivaTetapTotal + $aktivaLainLainTotal;
+
+        $hutangJangkaPendek = KodeRekening::where('kelompok_rek', 'Hutang Jangka Pendek')->get();
+        $jumlahHutangJangkaPendek = $hutangJangkaPendek->sum('saldo_awal');
+
+        $hutangJangkaPanjang = KodeRekening::where('kelompok_rek', 'Hutang Jangka Panjang')->get();
+        $jumlahHutangJangkaPanjang = $hutangJangkaPanjang->sum('saldo_awal');
+
+        $totalKewajiban = $jumlahHutangJangkaPendek + $jumlahHutangJangkaPanjang;
+
+        $modal = KodeRekening::where('kelompok_rek', 'Modal')->get();
+        $jumlahModal = $modal->sum('saldo_awal');
+
+        $totalPasiva = $totalKewajiban + $jumlahModal;
+
+        // Mendapatkan bulan saat ini
+        $currentMonth = Carbon::now()->format('m');
+
+        // Menghitung jumlah kredit dan debet untuk bulan saat ini
+        $totalKredit = TransaksiKeuangan::whereMonth('created_at', $currentMonth)->sum('kredit');
+        $totalDebet = TransaksiKeuangan::whereMonth('created_at', $currentMonth)->sum('debet');
+
+        // Menghitung laba bersih
+        $labaBersih = $totalKredit - $totalDebet;
+
+        // Membulatkan laba bersih ke angka terdekat
+        $labaBersihRounded = round($labaBersih, -3);
+
+        //dd($labaBersihRounded);
+
+        return view('laporan.neraca', compact('aktivaLancar', 'aktivaLancarTotal', 'aktivaTetap', 'aktivaTetapTotal', 'aktivaLainLain', 'aktivaLainLainTotal', 'totalSemua', 'hutangJangkaPendek', 'jumlahHutangJangkaPendek', 'hutangJangkaPanjang', 'jumlahHutangJangkaPanjang', 'totalKewajiban', 'modal', 'jumlahModal', 'totalPasiva', 'labaBersihRounded'));
+    }
+
+    private function getFinancialDataByGroup($group)
+    {
+        $data = KodeRekening::where('kelompok_rek', $group)->get();
+
+        // Adjust saldo_awal based on tipe_rek
+        $data->transform(function($item) {
+            if ($item->tipe_rek == 'KREDIT') {
+                $item->saldo_awal = -1 * $item->saldo_awal;
+            }
+            return $item;
         });
 
-        $totalDebet = $result->sum('debet');
-        $totalKredit = $result->sum('kredit');
-
-        //dd($result);
-        return view('laporan.neraca', compact('result', 'totalDebet', 'totalKredit'));
+        return $data;
     }
 
 
