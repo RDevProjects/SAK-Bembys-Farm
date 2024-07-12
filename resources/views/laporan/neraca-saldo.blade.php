@@ -29,20 +29,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $item)
+                @foreach ($result as $item)
                     <tr>
-                        <td class="border border-black px-4 py-0.5 text-center">{{ $item->kode_rek }}</td>
-                        <td class="border border-black px-4 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                        <td class="border border-black px-4 py-0.5 text-center">{{ $item['kode_rek'] }}</td>
+                        <td class="border border-black px-4 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                         <td class="border border-black px-4 py-0.5 text-end">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
-                                {{ number_format($item->debet, 0, ',', '.') }}
+                                {{ number_format($item['debet'], 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="border border-black px-4 py-0.5 text-end">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
-                                {{ number_format($item->kredit, 0, ',', '.') }}
+                                {{ number_format($item['kredit'], 0, ',', '.') }}
                             </div>
                         </td>
                     </tr>
@@ -52,13 +52,13 @@
                     <td class="border border-black px-4 py-1 text-end font-bold">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ number_format($data->sum('debet'), 0, ',', '.') }}
+                            {{ number_format($totalDebet, 0, ',', '.') }}
                         </div>
                     </td>
                     <td class="border border-black px-4 py-1 text-end font-bold">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ number_format($data->sum('kredit'), 0, ',', '.') }}
+                            {{ number_format($totalKredit, 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
