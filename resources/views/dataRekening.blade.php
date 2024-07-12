@@ -108,6 +108,36 @@
 @endsection
 
 @push('scripts')
+    <script>
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var saldoAwal = document.getElementById('saldo_awal');
+            var form = saldoAwal.closest('form');
+
+            saldoAwal.addEventListener('keyup', function(e) {
+                saldoAwal.value = formatRupiah(this.value, 'Rp ');
+            });
+
+            form.addEventListener('submit', function(e) {
+                saldoAwal.value = saldoAwal.value.replace(/[^,\d]/g, '');
+            });
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>

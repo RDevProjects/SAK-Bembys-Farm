@@ -1,6 +1,41 @@
 @extends('layout.default')
 @push('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script>
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var saldoAwal = document.getElementById('saldo_awal');
+            var form = saldoAwal.closest('form');
+
+            // Format initial value
+            if (saldoAwal.value) {
+                saldoAwal.value = formatRupiah(saldoAwal.value, 'Rp ');
+            }
+
+            saldoAwal.addEventListener('keyup', function(e) {
+                saldoAwal.value = formatRupiah(this.value, 'Rp ');
+            });
+
+            form.addEventListener('submit', function(e) {
+                saldoAwal.value = saldoAwal.value.replace(/[^,\d]/g, '');
+            });
+        });
+    </script>
 @endpush
 @push('styles')
     <style>

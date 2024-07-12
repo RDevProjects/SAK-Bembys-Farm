@@ -119,7 +119,25 @@ class LaporanController extends Controller
         return view('laporan.perubahan-modal', compact('dataModal', 'dataPendapatan', 'dataBiaya', 'totalPendapatan', 'totalBiaya'));
     }
 
+    public function indexNeraca()
+    {
+        $data = KodeRekening::all();
 
+        $result = $data->map(function($item) {
+            return [
+                'kode_rek' => $item->kode_rek,
+                'nama_rek' => $item->nama_rek,
+                'debet' => $item->tipe_rek === 'DEBET' ? $item->saldo_awal : 0,
+                'kredit' => $item->tipe_rek === 'KREDIT' ? $item->saldo_awal : 0,
+            ];
+        });
+
+        $totalDebet = $result->sum('debet');
+        $totalKredit = $result->sum('kredit');
+
+        //dd($result);
+        return view('laporan.neraca', compact('result', 'totalDebet', 'totalKredit'));
+    }
 
 
     public function getDataJurnalUmumJson()
