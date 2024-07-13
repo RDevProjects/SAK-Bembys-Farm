@@ -180,6 +180,30 @@ class LaporanController extends Controller
         return $data;
     }
 
+    public function indexArusKas()
+    {
+        $arusKasOperasi = TransaksiKeuangan::with('buktiTransaksi')->where('index_kas', 1)->get();
+        $arusKasInvestasi = TransaksiKeuangan::with('buktiTransaksi')->where('index_kas', 2)->get();
+        $arusKasPendanaan = TransaksiKeuangan::with('buktiTransaksi')->where('index_kas', 3)->get();
+
+        $totalKreditArusKasOperasi = $arusKasOperasi->sum('kredit');
+        $totalDebetArusKasOperasi = $arusKasOperasi->sum('debet');
+        $totalArusKasOperasi =  $totalDebetArusKasOperasi - $totalKreditArusKasOperasi;
+
+        $totalKreditArusKasInvestasi = $arusKasInvestasi->sum('kredit');
+        $totalDebetArusKasInvestasi = $arusKasInvestasi->sum('debet');
+        $totalArusKasInvestasi = $totalDebetArusKasInvestasi - $totalKreditArusKasInvestasi;
+
+        $totalKreditArusKasPendanaan = $arusKasPendanaan->sum('kredit');
+        $totalDebetArusKasPendanaan = $arusKasPendanaan->sum('debet');
+        $totalArusKasPendanaan = $totalDebetArusKasPendanaan - $totalKreditArusKasPendanaan ;
+
+        $totalKenaikanKas = $totalArusKasOperasi + $totalArusKasInvestasi + $totalArusKasPendanaan;
+
+        // return response()->json($arusKasPendanaan);
+        return view('laporan.arus-kas', compact('arusKasOperasi', 'arusKasInvestasi', 'arusKasPendanaan', 'totalKreditArusKasInvestasi', 'totalDebetArusKasInvestasi', 'totalArusKasInvestasi', 'totalKreditArusKasOperasi', 'totalDebetArusKasOperasi', 'totalArusKasOperasi', 'totalKreditArusKasPendanaan', 'totalDebetArusKasPendanaan', 'totalArusKasPendanaan', 'totalKenaikanKas'));
+    }
+
 
     public function getDataJurnalUmumJson()
     {
