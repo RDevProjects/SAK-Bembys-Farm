@@ -48,22 +48,25 @@
                     <div class="">
                         <label for="balance" class="block text-sm font-semibold my-2 text-gray-600">Balance</label>
                         <input type="text" name="balance" id="balance"
-                            class="py-1 px-2 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Balance" value="{{ $totalBalance }}" disabled />
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            placeholder="Balance" value="{{ 'Rp ' . number_format($totalBalance, 0, ',', '.') }}"
+                            disabled />
                     </div>
                     <div class="">
                         <label for="total_debet" class="block text-sm font-semibold my-2 text-gray-600">Total
                             Debet</label>
                         <input type="text" name="total_debet" id="total_debet"
-                            class="py-1 px-2 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Total Debet" value="{{ $totalDebet }}" disabled />
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            placeholder="Total Debet" value="{{ 'Rp ' . number_format($totalDebet, 0, ',', '.') }}"
+                            disabled />
                     </div>
                     <div class="">
                         <label for="total_kredit" class="block text-sm font-semibold my-2 text-gray-600">Total
                             Kredit</label>
                         <input type="text" name="total_kredit" id="total_kredit"
-                            class="py-1 px-2 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
-                            placeholder="Total Kredit" value="{{ $totalKredit }}" disabled />
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-600 focus:ring-0"
+                            placeholder="Total Kredit" value="{{ 'Rp ' . number_format($totalKredit, 0, ',', '.') }}"
+                            disabled />
                     </div>
                 </div>
             </div>

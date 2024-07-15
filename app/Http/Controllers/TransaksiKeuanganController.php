@@ -24,9 +24,9 @@ class TransaksiKeuanganController extends Controller
         return view('entryData', compact('kodeRekenings', 'namaUnits', 'totalDebet', 'totalKredit', 'totalBalance'));
     }
 
-    public function getTransaksiKeuangan(Request $request)
+    public function getTransaksiKeuangan()
     {
-        $data = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi', 'Unit')->select('transaksi_keuangan.*');
+        $data = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi', 'Unit');
 
         return DataTables::of($data)
             ->addColumn('kode_rek', function($row) {

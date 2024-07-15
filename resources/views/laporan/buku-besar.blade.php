@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUKU BESAR</title>
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
+    <style>
+        .fixed-width-15 {
+            width: 15%;
+        }
+
+        .fixed-width-20 {
+            width: 20%;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,9 +55,9 @@
                 <tr>
                     <th class="border border-black px-4 py-1 w-2">TANGGAL</th>
                     <th class="border border-black px-4 py-1">KETERANGAN</th>
-                    <th class="border border-black px-4 py-1">REF</th>
-                    <th class="border border-black px-4 py-1">DEBET</th>
-                    <th class="border border-black px-4 py-1">KREDIT</th>
+                    <th class="border border-black px-4 py-1 fixed-width-15">KODE REK</th>
+                    <th class="border border-black px-4 py-1 fixed-width-20">DEBET</th>
+                    <th class="border border-black px-4 py-1 fixed-width-20">KREDIT</th>
                 </tr>
             </thead>
             <tbody>

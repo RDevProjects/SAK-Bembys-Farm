@@ -33,11 +33,11 @@ class LaporanController extends Controller
 
     public function getDataBukuBesar(Request $request)
     {
-        $kode_rek = $request->kode_rek;
+        // $kode_rek = $request->kode_rek;
         $data = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
             ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan')
             ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
-            ->where('account_number', $kode_rek)
+            //->where('account_number', $kode_rek)
             ->get();
 
         // return response()->json($dataRekening);
@@ -63,8 +63,6 @@ class LaporanController extends Controller
         //dd($result);
         return view('laporan.neraca-saldo', compact('result', 'totalDebet', 'totalKredit'));
     }
-
-
 
     public function indexLabaRugi()
     {
@@ -203,7 +201,6 @@ class LaporanController extends Controller
         // return response()->json($arusKasPendanaan);
         return view('laporan.arus-kas', compact('arusKasOperasi', 'arusKasInvestasi', 'arusKasPendanaan', 'totalKreditArusKasInvestasi', 'totalDebetArusKasInvestasi', 'totalArusKasInvestasi', 'totalKreditArusKasOperasi', 'totalDebetArusKasOperasi', 'totalArusKasOperasi', 'totalKreditArusKasPendanaan', 'totalDebetArusKasPendanaan', 'totalArusKasPendanaan', 'totalKenaikanKas'));
     }
-
 
     public function getDataJurnalUmumJson()
     {
