@@ -22,7 +22,29 @@
     <!-- Main Content -->
     <div class="card bg-gray-50">
         <div class="card-body">
-            <h1 class="block text-xl font-semibold mb-5 text-gray-600">Entry Jurnal</h1>
+            <div class="flex justify-between">
+                <h1 class="block text-xl font-semibold mb-5 text-gray-600">Entry Jurnal</h1>
+                @if (session('message'))
+                    <div
+                        class="flex items-center justify-between bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+                        <div class="flex items-center">
+                            <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                                </path>
+                            </svg>
+                            <p>{{ session('message') }}</p>
+                        </div>
+                        <button type="button" class="text-gray-500 hover:text-gray-600"
+                            onclick="this.parentElement.remove()">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-9a1 1 0 10-2 0v2.586L7.707 11.7a1 1 0 00-1.414 1.414L9.586 15H8a1 1 0 100 2h4a1 1 0 100-2h-1.586l2.293-2.293a1 1 0 10-1.414-1.414L11 11.586V9z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                @endif
+            </div>
             <div class="flex">
                 <form action="{{ route('entry-jurnal.store') }}" method="POST">
                     @csrf
@@ -123,10 +145,10 @@
                     </div>
                 </form>
             </div>
-            {{-- table id_jurnal, no_akun (bukti_transaksi), account_number (kode_rek), index_kas, nama_unit, index_unit, debet, kredit --}}
             <table class="w-full whitespace-nowrap overflow-x-auto mt-8" id="dataTransaksiKeuangan">
                 <thead class="text-gray-700 bg-gray-50">
                     <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">No.</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID Jurnal</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Bukti Transaksi</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Keterangan</th>
@@ -137,7 +159,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Index Unit</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Debet</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Kredit</th>
-                        {{-- <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th> --}}
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                     </tr>
                 </thead>
             </table>
@@ -195,6 +217,10 @@
                     [0, 'desc']
                 ],
                 columns: [{
+                        data: null,
+                        name: 'DT_RowIndex'
+                    },
+                    {
                         data: 'id_jurnal',
                         name: 'id_jurnal'
                     },
@@ -234,13 +260,21 @@
                         data: 'kredit',
                         name: 'kredit'
                     },
-                    // {
-                    //     data: 'action',
-                    //     name: 'action',
-                    //     orderable: false,
-                    //     searchable: false
-                    // }
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
                 ],
+                columnDefs: [{
+                    targets: 0,
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                }],
                 scrollX: true,
                 scrollY: true,
                 scroller: true

@@ -28,7 +28,29 @@
     <!-- Main Content -->
     <div class="card bg-gray-50">
         <div class="card-body">
-            <h1 class="block text-xl font-semibold mb-5 text-gray-600">Input Unit</h1>
+            <div class="flex justify-between">
+                <h1 class="block text-xl font-semibold mb-5 text-gray-600">Input Unit</h1>
+                @if (session('message'))
+                    <div
+                        class="flex items-center justify-between bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+                        <div class="flex items-center">
+                            <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                                </path>
+                            </svg>
+                            <p>{{ session('message') }}</p>
+                        </div>
+                        <button type="button" class="text-gray-500 hover:text-gray-600"
+                            onclick="this.parentElement.remove()">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-9a1 1 0 10-2 0v2.586L7.707 11.7a1 1 0 00-1.414 1.414L9.586 15H8a1 1 0 100 2h4a1 1 0 100-2h-1.586l2.293-2.293a1 1 0 10-1.414-1.414L11 11.586V9z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                @endif
+            </div>
             <div class="flex justify-between gap-5">
                 <form action="{{ route('entry-jurnal.storeNamaUnit') }}" method="POST" class="w-2/5 my-auto">
                     @csrf

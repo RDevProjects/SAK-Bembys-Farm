@@ -41,7 +41,7 @@ class KodeRekeningController extends Controller
 
         KodeRekening::create($request->all());
 
-        return redirect()->route('data-rekening');
+        return redirect()->route('data-rekening')->with('message', 'Data berhasil ditambahkan');
     }
 
     public function edit($kode_rek)
@@ -63,6 +63,6 @@ class KodeRekeningController extends Controller
         //dd($request->all());
         KodeRekening::find($kode_rek)->update($request->all());
 
-        return redirect()->route('data-rekening');
+        return redirect()->route('data-rekening')->with('message', 'Data berhasil diubah');
     }
 }

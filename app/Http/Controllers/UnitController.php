@@ -36,7 +36,7 @@ class UnitController extends Controller
 
         Unit::create($validated);
 
-        return redirect()->route('entry-jurnal.showNamaUnit');
+        return redirect()->route('entry-jurnal.showNamaUnit')->with('message', 'Unit berhasil ditambahkan');
     }
 
     public function edit($id_unit)
@@ -55,6 +55,6 @@ class UnitController extends Controller
 
         Unit::find($id_unit)->update($validated);
 
-        return redirect()->route('entry-jurnal.showNamaUnit');
+        return redirect()->route('entry-jurnal.showNamaUnit')->with('message', 'Unit berhasil diubah');
     }
 }

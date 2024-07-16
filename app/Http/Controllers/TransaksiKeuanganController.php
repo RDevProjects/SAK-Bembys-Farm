@@ -29,6 +29,7 @@ class TransaksiKeuanganController extends Controller
         $data = TransaksiKeuangan::with('kodeRekening', 'buktiTransaksi', 'Unit');
 
         return DataTables::of($data)
+            ->addIndexColumn()
             ->addColumn('kode_rek', function($row) {
                 return $row->kodeRekening ? $row->kodeRekening->kode_rek : '';
             })
@@ -44,12 +45,10 @@ class TransaksiKeuanganController extends Controller
             ->addColumn('nama_unit', function($row) {
                 return $row->Unit ? $row->Unit->nama_unit : '';
             })
-            // ->addColumn('action', function($row){
-            //     $editUrl = route('entry-jurnal.edit', $row->id_jurnal);
-            //     $deleteUrl = route('entry-jurnal.delete', $row->id_jurnal);
-            //     return '<a href="'.$editUrl.'" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-edit"></i></a>
-            //             <a href="'.$deleteUrl.'" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-trash"></i></a>';
-            // })
+            ->addColumn('action', function($row){
+                $deleteUrl = route('entry-jurnal.delete', ['id_jurnal' => $row->id_jurnal, 'no_akun' => $row->no_akun]);
+                return '<a href="'.$deleteUrl.'" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-3 rounded-2xl"><i class="ti ti-trash"></i></a>';
+            })
             ->make(true);
     }
 
@@ -77,10 +76,10 @@ class TransaksiKeuanganController extends Controller
             $TransaksiKeuangan->save();
 
             DB::commit();
-            return redirect('/entry-jurnal')->with('status', 'Data transaksi berhasil ditambahkan!');
+            return redirect('/entry-jurnal')->with('message', 'Data transaksi berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect('/entry-jurnal')->with('error', 'Data transaksi gagal ditambahkan!');
+            return redirect('/entry-jurnal')->with('message', 'Data transaksi gagal ditambahkan!');
         }
 
     }
@@ -118,10 +117,30 @@ class TransaksiKeuanganController extends Controller
             $TransaksiKeuangan->save();
 
             DB::commit();
-            return redirect('/entry-jurnal')->with('status', 'Data transaksi berhasil diubah!');
+            return redirect('/entry-jurnal')->with('message', 'Data transaksi berhasil diubah!');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect('/entry-jurnal')->with('error', 'Data transaksi gagal diubah!');
+            return redirect('/entry-jurnal')->with('message', 'Data transaksi gagal diubah!');
+        }
+    }
+
+    public function destroy($id_jurnal, $no_akun)
+    {
+        //dd($id_jurnal, $no_akun);
+        DB::beginTransaction();
+
+        try {
+            $transaksi = TransaksiKeuangan::find($id_jurnal);
+            $transaksi->delete();
+
+            $keteranganTransaksi = KeteranganTransaksi::find($no_akun);
+            $keteranganTransaksi->delete();
+
+            DB::commit();
+            return redirect('/entry-jurnal')->with('message', 'Data transaksi berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect('/entry-jurnal')->with('message', 'Data transaksi gagal dihapus!');
         }
     }
 
