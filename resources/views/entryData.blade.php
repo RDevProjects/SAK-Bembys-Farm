@@ -76,13 +76,13 @@
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
                         </div>
-                        <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+                        {{-- <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="no_akun" class="block text-sm font-semibold my-2 text-gray-600">No.
                                 Akun</label>
                             <input type="text" name="no_akun" id="no_akun" maxlength="10"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
                                 placeholder="" />
-                        </div>
+                        </div> --}}
                         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                             <label for="index_kas" class="block text-sm font-semibold my-2 text-gray-600">Index Kas</label>
                             <select name="index_kas" id="index_kas"

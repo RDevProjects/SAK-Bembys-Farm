@@ -54,19 +54,16 @@ class TransaksiKeuanganController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
 
         try {
-            $KeteranganTransaksi = new KeteranganTransaksi();
-            $KeteranganTransaksi->bukti_transaksi = $request->bukti_transaksi;
-            $KeteranganTransaksi->tanggal_transaksi = $request->tanggal;
-            $KeteranganTransaksi->keterangan = $request->keterangan;
-            $KeteranganTransaksi->save();
+            $KeteranganTransaksi = KeteranganTransaksi::firstOrCreate(
+                ['bukti_transaksi' => $request->bukti_transaksi],
+                ['tanggal_transaksi' => $request->tanggal, 'keterangan' => $request->keterangan]
+            );
 
             $TransaksiKeuangan = new TransaksiKeuangan();
-            $TransaksiKeuangan->id_jurnal = $KeteranganTransaksi->id;
-            $TransaksiKeuangan->no_akun = $request->bukti_transaksi;
+            $TransaksiKeuangan->no_akun = $KeteranganTransaksi->bukti_transaksi;
             $TransaksiKeuangan->account_number = $request->account_number;
             $TransaksiKeuangan->index_kas = $request->index_kas;
             $TransaksiKeuangan->id_unit = $request->id_unit;
@@ -79,10 +76,11 @@ class TransaksiKeuanganController extends Controller
             return redirect('/entry-jurnal')->with('message', 'Data transaksi berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return redirect('/entry-jurnal')->with('message', 'Data transaksi gagal ditambahkan!');
         }
-
     }
+
 
     public function edit($id_jurnal)
     {
