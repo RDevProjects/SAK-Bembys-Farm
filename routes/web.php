@@ -37,6 +37,7 @@ Route::get('/tampil-jurnal', [TransaksiKeuanganController::class, 'tampilJurnal'
 Route::get('/laporan-jurnal-umum', [LaporanController::class, 'indexJurnalUmum'])->name('laporan-jurnal-umum');
 Route::get('/laporan-jurnal-umum/get', [LaporanController::class, 'getDataJurnalUmum'])->name('laporan-jurnal-umum.get');
 
+Route::get('/buku-besar', [LaporanController::class, 'indexBukuBesar'])->name('buku-besar');
 Route::get('/laporan-buku-besar', [LaporanController::class, 'getDataBukuBesar'])->name('laporan-buku-besar');
 
 Route::get('/laporan-neraca-saldo', [LaporanController::class, 'indexNeracaSaldo'])->name('laporan-neraca-saldo');

@@ -7,8 +7,8 @@
     <title>BUKU BESAR</title>
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
     <style>
-        .fixed-width-15 {
-            width: 15%;
+        .fixed-width-10 {
+            width: 10%;
         }
 
         .fixed-width-20 {
@@ -55,7 +55,7 @@
                 <tr>
                     <th class="border border-black px-4 py-1 w-2">TANGGAL</th>
                     <th class="border border-black px-4 py-1">KETERANGAN</th>
-                    <th class="border border-black px-4 py-1 fixed-width-15">KODE REK</th>
+                    <th class="border border-black px-2 py-1 fixed-width-10">KODE REK</th>
                     <th class="border border-black px-4 py-1 fixed-width-20">DEBET</th>
                     <th class="border border-black px-4 py-1 fixed-width-20">KREDIT</th>
                 </tr>
@@ -67,21 +67,56 @@
                             {{ \Carbon\Carbon::parse($item->tanggal_transaksi)->format('d/M/Y') }}</td>
                         <td class="border border-black px-4 py-0.5">{{ $item->keterangan }}</td>
                         <td class="border border-black px-4 py-0.5 text-center">{{ $item->account_number }}</td>
-                        <td class="border border-black px-4 py-0.5 text-end">{{ $item->debet }}</td>
-                        <td class="border border-black px-4 py-0.5 text-end">{{ $item->kredit }}</td>
+                        <td class="border border-black px-4 py-0.5 text-end">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                                {{ number_format($item->debet, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="border border-black px-4 py-0.5 text-end">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                                {{ number_format($item->kredit, 0, ',', '.') }}
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td class="border border-black px-8 py-1 text-end font-bold" colspan="3">Total</td>
+                    <td class="border border-b-black border-l-black border-r-transparent"></td>
+                    <td class="px-4 py-1 text-start font-bold" colspan="2">Setelah Dijumlah
+                        Dengan
+                        Saldo Awal</td>
                     <td class="border border-black px-4 py-1 text-end font-bold">
-                        {{ $data->sum('debet') }}</td>
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($data->sum('debet'), 0, ',', '.') }}
+                        </div>
+                    </td>
                     <td class="border border-black px-4 py-1 text-end font-bold">
-                        {{ $data->sum('kredit') }}</td>
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($data->sum('kredit'), 0, ',', '.') }}
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td class="border border-black px-8 py-1 text-end font-bold" colspan="3">Balance</td>
-                    <td class="border border-black px-4 py-1 text-center font-bold" colspan="2">
-                        {{ $data->sum('debet') - $data->sum('kredit') }}</td>
+                    <td></td>
+                    <td class="border border-y-black border-l-transparent border-r-black px-4 py-1 text-start font-bold"
+                        colspan="2">Saldo
+                        Balance Debet
+                    </td>
+                    <td class="border border-black px-4 py-1 text-center font-bold">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ $data->sum('debet') - $data->sum('kredit') }}
+                        </div>
+                    </td>
+                    <td class="border border-black px-4 py-1 text-center font-bold">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ $data->sum('debet') - $data->sum('kredit') }}
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>

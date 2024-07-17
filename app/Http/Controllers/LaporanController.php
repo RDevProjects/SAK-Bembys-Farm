@@ -31,6 +31,12 @@ class LaporanController extends Controller
         // return view('laporan.jurnal-umum', compact('data'));
     }
 
+    public function indexBukuBesar()
+    {
+        $kodeRekenings = KodeRekening::all();
+        return view('laporan.cari-buku-besar', compact('kodeRekenings'));
+    }
+
     public function getDataBukuBesar(Request $request)
     {
         // $kode_rek = $request->kode_rek;

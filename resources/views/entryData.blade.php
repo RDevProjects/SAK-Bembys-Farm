@@ -70,7 +70,7 @@
                             placeholder="" />
                     </div>
                     <div class="flex gap-1 mt-20 text-center">
-                        <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+                        <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 hidden">
                             <label for="id_jurnal" class="block text-sm font-semibold my-2 text-gray-600">ID Jurnal</label>
                             <input type="text" name="id_jurnal" id="id_jurnal" maxlength="5"
                                 class="py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-600 focus:ring-0"
@@ -149,7 +149,7 @@
                 <thead class="text-gray-700 bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">No.</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID Jurnal</th>
+                        {{-- <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID Jurnal</th> --}}
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Bukti Transaksi</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Keterangan</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Account Number</th>
@@ -166,7 +166,7 @@
             <div class="flex justify-between mt-16">
                 <div class="flex items-center gap-3 w-1/3">
                     <button type="submit"
-                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Jurnal</button>
+                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9 hidden">Jurnal</button>
                     <a href="{{ route('tampil-jurnal') }}"
                         class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</a>
                 </div>
@@ -220,10 +220,10 @@
                         data: null,
                         name: 'DT_RowIndex'
                     },
-                    {
-                        data: 'id_jurnal',
-                        name: 'id_jurnal'
-                    },
+                    // {
+                    //     data: 'id_jurnal',
+                    //     name: 'id_jurnal'
+                    // },
                     {
                         data: 'no_akun',
                         name: 'no_akun'
