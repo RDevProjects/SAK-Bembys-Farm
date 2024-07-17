@@ -13,7 +13,7 @@
                         <div class="grid grid-cols-3 gap-4">
                             <a href="{{ route('laporan-jurnal-umum') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Jurnal Umum</a>
-                            <a href="{{ route('laporan-buku-besar') }}" target="_blank"
+                            <a href="{{ route('buku-besar') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Buku Besar</a>
                             <a href="{{ route('laporan-neraca-saldo') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Neraca Saldo</a>
