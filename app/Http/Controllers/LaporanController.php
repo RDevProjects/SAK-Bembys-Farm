@@ -39,15 +39,13 @@ class LaporanController extends Controller
 
     public function getDataBukuBesar(Request $request)
     {
-        // $kode_rek = $request->kode_rek;
-        $data = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
-            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan')
-            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
-            //->where('account_number', $kode_rek)
+        $kode_rek = $request->input('kode_rek');
+        $kodeRekening = KodeRekening::where('kode_rek', $kode_rek)->first();
+        $transaksiKeuangans = TransaksiKeuangan::with('buktiTransaksi')
+            ->where('account_number', $kode_rek)
             ->get();
 
-        // return response()->json($dataRekening);
-         return view('laporan.buku-besar', compact('data'));
+        return view('laporan.buku-besar', compact('kodeRekening', 'transaksiKeuangans'));
     }
 
     public function indexNeracaSaldo()
