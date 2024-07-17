@@ -25,10 +25,6 @@
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Neraca</a>
                             <a href="{{ route('laporan-arus-kas') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Arus Kas</a>
-                            <a href="#" target="_blank"
-                                class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 8</a>
-                            <a href="#" target="_blank"
-                                class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan 9</a>
                         </div>
                     </div>
                 </div>
