@@ -54,6 +54,7 @@ class TransaksiKeuanganController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         DB::beginTransaction();
 
         try {
@@ -64,7 +65,7 @@ class TransaksiKeuanganController extends Controller
             $KeteranganTransaksi->save();
 
             $TransaksiKeuangan = new TransaksiKeuangan();
-            $TransaksiKeuangan->no_akun = $KeteranganTransaksi->bukti_transaksi;
+            $TransaksiKeuangan->no_akun = $request->bukti_transaksi;
             $TransaksiKeuangan->account_number = $request->account_number;
             $TransaksiKeuangan->index_kas = $request->index_kas;
             $TransaksiKeuangan->id_unit = $request->id_unit;
