@@ -57,10 +57,11 @@ class TransaksiKeuanganController extends Controller
         DB::beginTransaction();
 
         try {
-            $KeteranganTransaksi = KeteranganTransaksi::firstOrCreate(
-                ['bukti_transaksi' => $request->bukti_transaksi],
-                ['tanggal_transaksi' => $request->tanggal, 'keterangan' => $request->keterangan]
-            );
+            $KeteranganTransaksi = new KeteranganTransaksi();
+            $KeteranganTransaksi->bukti_transaksi = $request->bukti_transaksi;
+            $KeteranganTransaksi->tanggal_transaksi = $request->tanggal;
+            $KeteranganTransaksi->keterangan = $request->keterangan;
+            $KeteranganTransaksi->save();
 
             $TransaksiKeuangan = new TransaksiKeuangan();
             $TransaksiKeuangan->no_akun = $KeteranganTransaksi->bukti_transaksi;
