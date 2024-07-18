@@ -63,6 +63,7 @@
                             <span>Rp.</span>
                             {{ number_format($data->sum('kredit'), 0, ',', '.') }}
                         </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="border border-black px-8 py-1 text-end font-bold" colspan="3">Balance</td>
