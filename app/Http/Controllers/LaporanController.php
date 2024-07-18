@@ -64,7 +64,7 @@ class LaporanController extends Controller
         $totalDebet = $result->sum('debet');
         $totalKredit = $result->sum('kredit');
 
-        //dd($result);
+        dd($result);
         return view('laporan.neraca-saldo', compact('result', 'totalDebet', 'totalKredit'));
     }
 
@@ -184,26 +184,52 @@ class LaporanController extends Controller
 
     public function indexArusKas()
     {
-        $arusKasOperasi = TransaksiKeuangan::with('buktiTransaksi')->where('index_kas', 1)->get();
-        $arusKasInvestasi = TransaksiKeuangan::with('buktiTransaksi')->where('index_kas', 2)->get();
-        $arusKasPendanaan = TransaksiKeuangan::with('buktiTransaksi')->where('index_kas', 3)->get();
+        $arusKasOperasi = TransaksiKeuangan::whereHas('kodeRekening', function($query) {
+            $query->where('index_kas', 1)->where('kode_rek', '1111')->where('tipe_rek', 'DEBET');
+        })->with('buktiTransaksi')->get();
 
-        $totalKreditArusKasOperasi = $arusKasOperasi->sum('kredit');
+        $arusKasInvestasi = TransaksiKeuangan::whereHas('kodeRekening', function($query) {
+            $query->whereIn('kode_rek', ['1310', '1320', '1330', '1340', '1350'])->where('index_kas', 2);
+        })->with('buktiTransaksi')->get();
+
+        $arusKasPendanaan = TransaksiKeuangan::whereHas('kodeRekening', function($query) {
+            $query->where('index_kas', 3)->where('kode_rek', '2210')->where('tipe_rek', 'KREDIT');
+        })->with('buktiTransaksi')->get();
+
         $totalDebetArusKasOperasi = $arusKasOperasi->sum('debet');
-        $totalArusKasOperasi =  $totalDebetArusKasOperasi - $totalKreditArusKasOperasi;
+        $totalKreditArusKasOperasi = $arusKasOperasi->sum('kredit');
+        $totalArusKasOperasi = $totalDebetArusKasOperasi - $totalKreditArusKasOperasi;
 
-        $totalKreditArusKasInvestasi = $arusKasInvestasi->sum('kredit');
         $totalDebetArusKasInvestasi = $arusKasInvestasi->sum('debet');
+        $totalKreditArusKasInvestasi = $arusKasInvestasi->sum('kredit');
         $totalArusKasInvestasi = $totalDebetArusKasInvestasi - $totalKreditArusKasInvestasi;
 
-        $totalKreditArusKasPendanaan = $arusKasPendanaan->sum('kredit');
         $totalDebetArusKasPendanaan = $arusKasPendanaan->sum('debet');
-        $totalArusKasPendanaan = $totalDebetArusKasPendanaan - $totalKreditArusKasPendanaan ;
+        $totalKreditArusKasPendanaan = $arusKasPendanaan->sum('kredit');
+        $totalArusKasPendanaan = $totalDebetArusKasPendanaan - $totalKreditArusKasPendanaan;
 
         $totalKenaikanKas = $totalArusKasOperasi + $totalArusKasInvestasi + $totalArusKasPendanaan;
 
-        // return response()->json($arusKasPendanaan);
-        return view('laporan.arus-kas', compact('arusKasOperasi', 'arusKasInvestasi', 'arusKasPendanaan', 'totalKreditArusKasInvestasi', 'totalDebetArusKasInvestasi', 'totalArusKasInvestasi', 'totalKreditArusKasOperasi', 'totalDebetArusKasOperasi', 'totalArusKasOperasi', 'totalKreditArusKasPendanaan', 'totalDebetArusKasPendanaan', 'totalArusKasPendanaan', 'totalKenaikanKas'));
+        $kasAwalBulanMei2024 = KodeRekening::where('kode_rek', '1111')->sum('saldo_awal');
+        $kasAkhirBulanMei2024 = $totalKenaikanKas + $kasAwalBulanMei2024;
+
+        return view('laporan.arus-kas', compact(
+            'arusKasOperasi',
+            'arusKasInvestasi',
+            'arusKasPendanaan',
+            'totalDebetArusKasOperasi',
+            'totalKreditArusKasOperasi',
+            'totalArusKasOperasi',
+            'totalDebetArusKasInvestasi',
+            'totalKreditArusKasInvestasi',
+            'totalArusKasInvestasi',
+            'totalDebetArusKasPendanaan',
+            'totalKreditArusKasPendanaan',
+            'totalArusKasPendanaan',
+            'totalKenaikanKas',
+            'kasAwalBulanMei2024',
+            'kasAkhirBulanMei2024'
+        ));
     }
 
     public function getDataJurnalUmumJson()

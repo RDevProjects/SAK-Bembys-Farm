@@ -11,10 +11,6 @@
             width: 20%;
         }
 
-        /* * {
-            border: 1px solid red;
-        } */
-
         .border-x-1 {
             border-left: 1px solid black;
             border-right: 1px solid black;
@@ -37,7 +33,7 @@
             <h3 class="font-bold text-lg mt-4">LAPORAN ARUS KAS</h3>
             <p class="mb-5">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
         </div>
-        <table class="mx-auto w-10/12 bg-white border border-black ">
+        <table class="mx-auto w-10/12 bg-white border border-black">
             <thead>
                 <tr>
                     <th class="px-3 py-1 text-start border border-black" colspan="2">KETERANGAN</th>
@@ -47,10 +43,10 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Arus Kas dari Kegiatan Investasi -->
                 <tr>
                     <td class="px-3 py-0.5 font-bold text-start border-x-1 border-black" colspan="2">Arus Kas dari
-                        kegiatan
-                        Investasi</td>
+                        kegiatan Investasi</td>
                     <td class="px-4 py-0.5 text-start fixed-width border-x-1 border-black"></td>
                     <td class="px-4 py-0.5 text-end fixed-width border-x-1 border-black"></td>
                     <td class="px-4 py-0.5 text-end border-x-1 border-black"></td>
@@ -95,7 +91,7 @@
                     <td class="px-4 py-1 text-start font-bold border-x-1 border-black" colspan="2"></td>
                     <td class="px-4 py-1 text-end font-bold border-x-1 border-black"></td>
                     <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width"></td>
-                    <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width">
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-b-2 border-black fixed-width">
                         <div class="flex justify-between">
                             <span>Rp.</span>
                             {{ number_format($totalArusKasInvestasi, 0, ',', '.') }}
@@ -103,10 +99,10 @@
                     </td>
                 </tr>
 
+                <!-- Arus Kas dari Kegiatan Operasi -->
                 <tr>
                     <td class="px-3 py-0.5 font-bold text-start border-x-1 border-black" colspan="2">Arus Kas dari
-                        kegiatan
-                        Operasi</td>
+                        kegiatan Operasi</td>
                     <td class="px-4 py-0.5 text-start fixed-width border-x-1 border-black"></td>
                     <td class="px-4 py-0.5 text-end fixed-width border-x-1 border-black"></td>
                     <td class="px-4 py-0.5 text-end border-x-1 border-black"></td>
@@ -151,7 +147,7 @@
                     <td class="px-4 py-1 text-start font-bold border-x-1 border-black" colspan="2"></td>
                     <td class="px-4 py-1 text-end font-bold border-x-1 border-black"></td>
                     <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width"></td>
-                    <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width">
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-b-2 border-black fixed-width">
                         <div class="flex justify-between">
                             <span>Rp.</span>
                             {{ number_format($totalArusKasOperasi, 0, ',', '.') }}
@@ -159,10 +155,10 @@
                     </td>
                 </tr>
 
+                <!-- Arus Kas dari Kegiatan Pendanaan -->
                 <tr>
                     <td class="px-3 py-0.5 font-bold text-start border-x-1 border-black" colspan="2">Arus Kas dari
-                        kegiatan
-                        Pendanaan</td>
+                        kegiatan Pendanaan</td>
                     <td class="px-4 py-0.5 text-start fixed-width border-x-1 border-black"></td>
                     <td class="px-4 py-0.5 text-end fixed-width border-x-1 border-black"></td>
                     <td class="px-4 py-0.5 text-end border-x-1 border-black"></td>
@@ -214,31 +210,52 @@
                         </div>
                     </td>
                 </tr>
+
+                <!-- Total Kenaikan Kas -->
                 <tr>
-                    <td class="px-4 py-1 text-start font-bold border-x-1 border-black" colspan="2">Kenaikan Kas</td>
+                    <td class="px-4 py-1 text-start font-bold border-x-1 border-black" colspan="2">Total Kenaikan Kas
+                    </td>
                     <td class="px-4 py-1 text-end font-bold border-x-1 border-black"></td>
                     <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width"></td>
-                    <td class="px-4 py-1 text-end font-bold border-x-1 border-b-2 border-black fixed-width">
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-y-2 border-black fixed-width">
                         <div class="flex justify-between">
                             <span>Rp.</span>
                             {{ number_format($totalKenaikanKas, 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
+
+                <!-- Kas Awal Bulan Mei 2024 -->
+                <tr>
+                    <td class="px-4 py-1 text-start font-bold border-x-1 border-black" colspan="2">Kas Awal Bulan
+                        Mei
+                        2024</td>
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-black"></td>
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width"></td>
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-y-2 border-black fixed-width">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($kasAwalBulanMei2024, 0, ',', '.') }}
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Kas Akhir Bulan Mei 2024 -->
+                <tr>
+                    <td class="px-4 py-1 text-start font-bold border-x-1 border-black" colspan="2">Kas Akhir Bulan
+                        Mei
+                        2024</td>
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-black"></td>
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-black fixed-width"></td>
+                    <td class="px-4 py-1 text-end font-bold border-x-1 border-y-2 border-black fixed-width">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($kasAkhirBulanMei2024, 0, ',', '.') }}
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <div class="mt-8">
-            <div class="flex justify-end">
-                <div class="w-1/3">
-                    <p class="text-center">Tertanda,</p>
-                    <p class="text-center">Bagian Keuangan</p>
-                    <br>
-                    <br>
-                    <br>
-                    <p class="text-center">______________________</p>
-                </div>
-            </div>
-        </div>
     </div>
 </body>
 
