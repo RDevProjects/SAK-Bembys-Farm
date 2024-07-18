@@ -11,9 +11,13 @@
 <body>
     <div class="container mx-auto my-8">
         <div class="text-center">
-            <h1 class="font-bold text-xl my-4">{{ env('APP_BRAND') }}</h1>
-            {{-- <h2 class="font-semibold text-lg">SINAR NUSANTARA</h2>
-            <p>Jl. KH. Samanhudi No. 84-86 Mangkunyudan, Solo</p> --}}
+            <div class="flex items-center justify-center">
+                <img src="{{ asset('logo.png') }}" alt="logo" class="w-14 -ml-14">
+                <div class="ml-0">
+                    <h1 class="font-bold text-xl">{{ env('APP_BRAND') }}</h1>
+                    <p class="text-center">Jl. Tanggunggunung, Kalidawir, Tulungagung, Jawa Timur</p>
+                </div>
+            </div>
             <hr class="border-t-2 border-gray-900 my-1">
             <hr class="border-t-4 border-gray-900">
             <h3 class="font-bold text-lg mt-4">JURNAL UMUM</h3>
@@ -76,7 +80,18 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+        <div class="mt-8">
+            <div class="flex justify-end">
+                <div class="w-1/3">
+                    <p class="text-center">Tertanda,</p>
+                    <p class="text-center">Bagian Keuangan</p>
+                    <br>
+                    <br>
+                    <br>
+                    <p class="text-center">______________________</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
