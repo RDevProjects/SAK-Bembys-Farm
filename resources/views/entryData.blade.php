@@ -168,7 +168,7 @@
                     <button type="submit"
                         class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9 hidden">Jurnal</button>
                     <a href="{{ route('tampil-jurnal') }}"
-                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9">Record</a>
+                        class="btn text-sm p-1 text-white font-medium w-1/3 hover:bg-blue-700 my-9 {{ $totalBalance != 0 ? 'disabled' : '' }}">Record</a>
                 </div>
                 <div class="flex gap-3">
                     <div class="">

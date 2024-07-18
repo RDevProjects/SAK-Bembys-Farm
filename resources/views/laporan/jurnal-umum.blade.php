@@ -36,21 +36,42 @@
                             {{ \Carbon\Carbon::parse($item->tanggal_transaksi)->format('d/M/Y') }}</td>
                         <td class="border border-black px-4 py-0.5">{{ $item->keterangan }}</td>
                         <td class="border border-black px-4 py-0.5 text-center">{{ $item->account_number }}</td>
-                        <td class="border border-black px-4 py-0.5 text-end">{{ $item->debet }}</td>
-                        <td class="border border-black px-4 py-0.5 text-end">{{ $item->kredit }}</td>
+                        <td class="border border-black px-4 py-0.5 text-end">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                                {{ number_format($item->debet, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="border border-black px-4 py-0.5 text-end">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                                {{ number_format($item->kredit, 0, ',', '.') }}
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
                 <tr>
                     <td class="border border-black px-8 py-1 text-end font-bold" colspan="3">Total</td>
                     <td class="border border-black px-4 py-1 text-end font-bold">
-                        {{ $data->sum('debet') }}</td>
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($data->sum('debet'), 0, ',', '.') }}
+                        </div>
+                    </td>
                     <td class="border border-black px-4 py-1 text-end font-bold">
-                        {{ $data->sum('kredit') }}</td>
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($data->sum('kredit'), 0, ',', '.') }}
+                        </div>
                 </tr>
                 <tr>
                     <td class="border border-black px-8 py-1 text-end font-bold" colspan="3">Balance</td>
                     <td class="border border-black px-4 py-1 text-center font-bold" colspan="2">
-                        {{ $data->sum('debet') - $data->sum('kredit') }}</td>
+                        <div class="flex justify-center">
+                            <span>Rp.</span>
+                            {{ $data->sum('debet') - $data->sum('kredit') }}
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
