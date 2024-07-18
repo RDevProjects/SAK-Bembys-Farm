@@ -90,8 +90,13 @@
                 </tr>
                 @foreach ($transaksiKeuangans as $transaksi)
                     @php
-                        $saldo += $transaksi->debet;
-                        $saldo -= $transaksi->kredit;
+                        if ($kodeRekening->tipe_rek === 'DEBET') {
+                            $saldo += $transaksi->debet;
+                            $saldo -= $transaksi->kredit;
+                        } else {
+                            $saldo -= $transaksi->debet;
+                            $saldo += $transaksi->kredit;
+                        }
                     @endphp
                     <tr>
                         <td class="border border-black px-4 py-0.5 text-center">
