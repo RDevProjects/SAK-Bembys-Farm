@@ -71,9 +71,17 @@
                                 <span>Rp.</span>{{ number_format($saldo, 0, ',', '.') }}
                             </div>
                         </td>
-                        <td class="border border-black px-4 py-0.5 text-end"></td>
+                        <td class="border border-black px-4 py-0.5 text-end">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                            </div>
+                        </td>
                     @else
-                        <td class="border border-black px-4 py-0.5 text-end"></td>
+                        <td class="border border-black px-4 py-0.5 text-end">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                            </div>
+                        </td>
                         <td class="border border-black px-4 py-0.5 text-end">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
