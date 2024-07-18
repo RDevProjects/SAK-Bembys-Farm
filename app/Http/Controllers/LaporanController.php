@@ -64,7 +64,7 @@ class LaporanController extends Controller
         $totalDebet = $result->sum('debet');
         $totalKredit = $result->sum('kredit');
 
-        dd($result);
+        //dd($result);
         return view('laporan.neraca-saldo', compact('result', 'totalDebet', 'totalKredit'));
     }
 
@@ -210,7 +210,7 @@ class LaporanController extends Controller
 
         $totalKenaikanKas = $totalArusKasOperasi + $totalArusKasInvestasi + $totalArusKasPendanaan;
 
-        $kasAwalBulanMei2024 = KodeRekening::where('kode_rek', '1111')->sum('saldo_awal');
+        $kasAwalBulanMei2024 = KodeRekening::whereIn('kode_rek', ['1111', '1112'])->sum('saldo_awal');
         $kasAkhirBulanMei2024 = $totalKenaikanKas + $kasAwalBulanMei2024;
 
         return view('laporan.arus-kas', compact(
