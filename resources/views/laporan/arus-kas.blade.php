@@ -21,12 +21,13 @@
 <body>
     <div class="container mx-auto my-8">
         <div class="text-center">
-            <div class="flex items-center justify-center">
-                <img src="{{ asset('logo.png') }}" alt="logo" class="w-14 -ml-14">
+            <div class="flex items-center justify-between">
+                <img src="{{ asset('logo.png') }}" alt="logo" class="w-14">
                 <div class="ml-0">
                     <h1 class="font-bold text-xl">{{ env('APP_BRAND') }}</h1>
                     <p class="text-center">Jl. Tanggunggunung, Kalidawir, Tulungagung, Jawa Timur</p>
                 </div>
+                <div class="w-14"></div>
             </div>
             <hr class="border-t-2 border-gray-900 my-1">
             <hr class="border-t-4 border-gray-900">
