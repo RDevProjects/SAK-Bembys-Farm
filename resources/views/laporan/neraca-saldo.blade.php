@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neraca Saldo</title>
+    <title>Neraca Saldo Akhir</title>
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
 </head>
 
@@ -21,7 +21,7 @@
             </div>
             <hr class="border-t-2 border-gray-900 my-1">
             <hr class="border-t-4 border-gray-900">
-            <h3 class="font-bold text-lg mt-4">Neraca Saldo</h3>
+            <h3 class="font-bold text-lg mt-4">Neraca Saldo Akhir</h3>
             <p class="mb-5">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
         </div>
         <table class="mx-auto w-10/12 bg-white border border-black">

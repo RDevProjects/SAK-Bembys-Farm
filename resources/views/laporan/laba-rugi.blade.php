@@ -7,9 +7,17 @@
     <title>Laba Rugi</title>
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
     <style>
+        .fixed-width-10 {
+            width: 10%;
+        }
+
         .fixed-width {
             width: 20%;
         }
+
+        /* * {
+            border: 1px solid red;
+        } */
     </style>
 </head>
 
@@ -32,7 +40,7 @@
         <table class="mx-auto w-10/12 bg-white border border-black">
             <thead>
                 <tr>
-                    <th class="px-0 py-1">PENDAPATAN</th>
+                    <th class="px-0 py-1 fixed-width">Pendapatan</th>
                     <th class="px-4 py-1"></th>
                     <th class="px-4 py-1 fixed-width"></th>
                     <th class="px-4 py-1 fixed-width"></th>
@@ -41,18 +49,18 @@
             <tbody>
                 @foreach ($dataPendapatan as $item)
                     <tr>
-                        <td class="px-10 py-0.5 text-start">{{-- {{ $item->kode_rek }} --}}</td>
-                        <td class="px-4 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                        {{-- <td class="px-10 py-0.5 text-start">{{ $item['account_number'] }}</td> --}}
+                        <td class="px-40 py-0.5 text-start" colspan="2">{{ $item['nama_rek'] }}</td>
                         <td class="px-4 py-0.5 text-end fixed-width">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
-                                {{ number_format($item->kredit, 0, ',', '.') }}
+                                {{ number_format($item['saldo'], 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="px-4 py-0.5 text-end">
                             <div class="flex justify-between fixed-width">
                                 {{-- <span>Rp.</span>
-                                {{ $item->kredit }} --}}
+                                {{ $item['kredit'] }} --}}
                             </div>
                         </td>
                     </tr>
@@ -69,7 +77,7 @@
                     <td class="px-4 py-1 text-end font-bold fixed-width">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ number_format($dataPendapatan->sum('kredit'), 0, ',', '.') }}
+                            {{ number_format($totalPendapatan, 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
@@ -78,44 +86,106 @@
         <table class="mx-auto w-10/12 bg-white border border-black">
             <thead>
                 <tr>
-                    <th class="ps-0 py-1">BIAYA</th>
+                    <th class="px-0 py-1 fixed-width">Harga Pokok Penjualan</th>
                     <th class="px-4 py-1"></th>
                     <th class="px-4 py-1 fixed-width"></th>
                     <th class="px-4 py-1 fixed-width"></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($dataBiaya as $item)
+                @foreach ($dataHargaPokokPenjualan as $item)
                     <tr>
-                        <td class="px-10 py-0.5 text-start">{{-- {{ $item->kode_rek }} --}}</td>
-                        <td class="px-4 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                        {{-- <td class="px-10 py-0.5 text-start">{{ $item['account_number'] }}</td> --}}
+                        <td class="px-40 py-0.5 text-start" colspan="2">{{ $item['nama_rek'] }}</td>
                         <td class="px-4 py-0.5 text-end fixed-width">
                             <div class="flex justify-between">
                                 <span>Rp.</span>
-                                {{ number_format($item->debet, 0, ',', '.') }}
+                                {{ number_format($item['saldo'], 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="px-4 py-0.5 text-end">
                             <div class="flex justify-between fixed-width">
                                 {{-- <span>Rp.</span>
-                                {{ $item->kredit }} --}}
+                                {{ $item['kredit'] }} --}}
                             </div>
                         </td>
                     </tr>
                 @endforeach
                 <tr>
                     <td></td>
-                    <td class="px-4 py-1 text-start font-bold">Total Biaya</td>
+                    <td class="px-4 py-1 text-start font-bold">Total Harga Pokok Penjualan</td>
                     <td class="px-4 py-1 text-end font-bold">
                         <div class="flex justify-between">
                             {{-- <span>Rp.</span>
-                            {{ $dataBiaya->sum('debet') }} --}}
+                            {{ $dataPendapatan->sum('debet') }} --}}
                         </div>
                     </td>
                     <td class="px-4 py-1 text-end font-bold fixed-width">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ number_format($dataBiaya->sum('debet'), 0, ',', '.') }}
+                            {{ number_format($totalHargaPokokPenjualan, 0, ',', '.') }}
+                        </div>
+                    </td>
+                </tr>
+                <tr class="border-y-2 border-black">
+                    <td></td>
+                    <td class="px-4 py-1 text-start font-bold">Laba Kotor</td>
+                    <td class="px-4 py-1 text-end font-bold">
+                        <div class="flex justify-between">
+                            {{-- <span>Rp.</span>
+                            {{ $dataPendapatan->sum('debet') }} --}}
+                        </div>
+                    </td>
+                    <td class="px-4 py-1 text-end font-bold fixed-width">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($labaKotor, 0, ',', '.') }}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="mx-auto w-10/12 bg-white border border-black">
+            <thead>
+                <tr>
+                    <th class="px-0 py-1 fixed-width">Beban</th>
+                    <th class="px-4 py-1"></th>
+                    <th class="px-4 py-1 fixed-width"></th>
+                    <th class="px-4 py-1 fixed-width"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($dataBeban as $item)
+                    <tr>
+                        {{-- <td class="px-10 py-0.5 text-start">{{ $item['account_number'] }}</td> --}}
+                        <td class="px-40 py-0.5 text-start" colspan="2">{{ $item['nama_rek'] }}</td>
+                        <td class="px-4 py-0.5 text-end fixed-width">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                                {{ number_format($item['saldo'], 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="px-4 py-0.5 text-end">
+                            <div class="flex justify-between fixed-width">
+                                {{-- <span>Rp.</span>
+                                {{ $item['kredit'] }} --}}
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td></td>
+                    <td class="px-4 py-1 text-start font-bold">Total Beban</td>
+                    <td class="px-4 py-1 text-end font-bold">
+                        <div class="flex justify-between">
+                            {{-- <span>Rp.</span>
+                            {{ $dataPendapatan->sum('debet') }} --}}
+                        </div>
+                    </td>
+                    <td class="px-4 py-1 text-end font-bold fixed-width">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($totalBeban, 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
@@ -132,7 +202,7 @@
             </thead>
             <tbody>
                 <td></td>
-                <td class="px-0 py-1 text-start font-bold">Laba/Rugi bersih</td>
+                <td class="px-0 py-1 text-start font-bold">Laba Bersih</td>
                 <td class="px-4 py-1 text-end font-bold">
                     <div class="flex justify-between">
                         {{-- <span>Rp.</span>
@@ -142,7 +212,7 @@
                 <td class="px-4 py-1 text-end font-bold">
                     <div class="flex justify-between">
                         <span>Rp.</span>
-                        {{ number_format($dataPendapatan->sum('kredit') - $dataBiaya->sum('debet'), 0, ',', '.') }}
+                        {{ number_format($labaBersih, 0, ',', '.') }}
                     </div>
                 </td>
             </tbody>

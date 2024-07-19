@@ -88,23 +88,66 @@ class LaporanController extends Controller
 
     public function indexLabaRugi()
     {
-        $dataPendapatan = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
-            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan', 'kode_rekening.kode_rek', 'kode_rekening.nama_rek', 'transaksi_keuangan.debet', 'transaksi_keuangan.kredit')
-            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
-            ->join('kode_rekening', 'transaksi_keuangan.account_number', '=', 'kode_rekening.kode_rek')
-            ->where('transaksi_keuangan.index_unit', 1)
-            ->orderBy('kode_rekening.kode_rek', 'asc')
+        // Pendapatan
+        $dataPendapatan = TransaksiKeuangan::with('buktiTransaksi')
+            ->where('account_number', '4110')
             ->get();
+        $totalPendapatan = $dataPendapatan->sum('kredit');
 
-        $dataBiaya = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
-            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan', 'kode_rekening.kode_rek', 'kode_rekening.nama_rek', 'transaksi_keuangan.debet', 'transaksi_keuangan.kredit')
-            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
-            ->join('kode_rekening', 'transaksi_keuangan.account_number', '=', 'kode_rekening.kode_rek')
-            ->where('transaksi_keuangan.index_unit', 0)
-            ->orderBy('kode_rekening.kode_rek', 'asc')
+        // Harga Pokok Penjualan
+        $dataHargaPokokPenjualan = TransaksiKeuangan::with('buktiTransaksi')
+            ->whereIn('account_number', ['5130', '5140'])
             ->get();
-        // return response()->json($data);
-         return view('laporan.laba-rugi', compact('dataPendapatan', 'dataBiaya'));
+        $totalHargaPokokPenjualan = $dataHargaPokokPenjualan->sum('debet');
+
+        // Laba Kotor
+        $labaKotor = $totalPendapatan - $totalHargaPokokPenjualan;
+
+        // Beban
+        $dataBeban = TransaksiKeuangan::with('buktiTransaksi')
+            ->whereIn('account_number', ['5110', '5120'])
+            ->get();
+        $totalBeban = $dataBeban->sum('debet');
+
+        // Laba Bersih
+        $labaBersih = $labaKotor - $totalBeban;
+
+        // Calculate the final balance for each account
+        $dataPendapatan = $dataPendapatan->groupBy('account_number')->map(function ($group) {
+            return [
+                'account_number' => $group[0]->account_number,
+                'nama_rek' => $group[0]->kodeRekening->nama_rek,
+                'saldo' => $group->sum('kredit'),
+            ];
+        })->values();
+
+        $dataHargaPokokPenjualan = $dataHargaPokokPenjualan->groupBy('account_number')->map(function ($group) {
+            return [
+                'account_number' => $group[0]->account_number,
+                'nama_rek' => $group[0]->kodeRekening->nama_rek,
+                'saldo' => $group->sum('debet'),
+            ];
+        })->values();
+
+        $dataBeban = $dataBeban->groupBy('account_number')->map(function ($group) {
+            return [
+                'account_number' => $group[0]->account_number,
+                'nama_rek' => $group[0]->kodeRekening->nama_rek,
+                'saldo' => $group->sum('debet'),
+            ];
+        })->values();
+
+        //dd($dataPendapatan, $dataHargaPokokPenjualan, $dataBeban);
+        return view('laporan.laba-rugi', compact(
+            'dataPendapatan',
+            'totalPendapatan',
+            'dataHargaPokokPenjualan',
+            'totalHargaPokokPenjualan',
+            'labaKotor',
+            'dataBeban',
+            'totalBeban',
+            'labaBersih'
+        ));
     }
 
     public function indexPerubahanModal()
