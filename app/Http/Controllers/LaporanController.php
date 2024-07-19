@@ -50,23 +50,41 @@ class LaporanController extends Controller
 
     public function indexNeracaSaldo()
     {
+        // Fetch all KodeRekening
         $data = KodeRekening::all();
 
         $result = $data->map(function($item) {
+            // Fetch transactions for the current kode_rek
+            $transaksiKeuangans = TransaksiKeuangan::with('buktiTransaksi')
+                ->where('account_number', $item->kode_rek)
+                ->get();
+
+            // Calculate the final balance
+            $saldo = $item->saldo_awal;
+            foreach ($transaksiKeuangans as $transaksi) {
+                if ($item->tipe_rek === 'DEBET') {
+                    $saldo += $transaksi->debet;
+                    $saldo -= $transaksi->kredit;
+                } else {
+                    $saldo -= $transaksi->debet;
+                    $saldo += $transaksi->kredit;
+                }
+            }
+
             return [
                 'kode_rek' => $item->kode_rek,
                 'nama_rek' => $item->nama_rek,
-                'debet' => $item->tipe_rek === 'DEBET' ? $item->saldo_awal : 0,
-                'kredit' => $item->tipe_rek === 'KREDIT' ? $item->saldo_awal : 0,
+                'debet' => $item->tipe_rek === 'DEBET' ? $saldo : 0,
+                'kredit' => $item->tipe_rek === 'KREDIT' ? $saldo : 0,
             ];
         });
 
         $totalDebet = $result->sum('debet');
         $totalKredit = $result->sum('kredit');
 
-        //dd($result);
         return view('laporan.neraca-saldo', compact('result', 'totalDebet', 'totalKredit'));
     }
+
 
     public function indexLabaRugi()
     {
