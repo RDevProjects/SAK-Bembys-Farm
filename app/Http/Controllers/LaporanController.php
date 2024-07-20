@@ -85,7 +85,6 @@ class LaporanController extends Controller
         return view('laporan.neraca-saldo', compact('result', 'totalDebet', 'totalKredit'));
     }
 
-
     public function indexLabaRugi()
     {
         // Pendapatan
@@ -112,6 +111,9 @@ class LaporanController extends Controller
         // Laba Bersih
         $labaBersih = $labaKotor - $totalBeban;
 
+        // Simpan laba bersih ke dalam session
+        session(['labaBersih' => $labaBersih]);
+
         // Calculate the final balance for each account
         $dataPendapatan = $dataPendapatan->groupBy('account_number')->map(function ($group) {
             return [
@@ -137,7 +139,6 @@ class LaporanController extends Controller
             ];
         })->values();
 
-        //dd($dataPendapatan, $dataHargaPokokPenjualan, $dataBeban);
         return view('laporan.laba-rugi', compact(
             'dataPendapatan',
             'totalPendapatan',
@@ -152,35 +153,20 @@ class LaporanController extends Controller
 
     public function indexPerubahanModal()
     {
+        // Ambil nilai laba bersih dari session
+        $labaBersih = session('labaBersih');
+
+        // Lakukan apa yang perlu dilakukan dengan labaBersih di sini
+        //dd($labaBersih);
         $dataModal = KodeRekening::where('kode_rek', '3110')->get();
 
-        $dataPendapatan = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
-            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan', 'kode_rekening.kode_rek', 'kode_rekening.nama_rek', 'transaksi_keuangan.debet', 'transaksi_keuangan.kredit')
-            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
-            ->join('kode_rekening', 'transaksi_keuangan.account_number', '=', 'kode_rekening.kode_rek')
-            ->where('transaksi_keuangan.index_unit', 1)
-            ->orderBy('kode_rekening.kode_rek', 'asc')
-            ->get();
+        $dataPendapatan = KodeRekening::whereIn('kode_rek', ['3210', '3310'])->get();
+        // return response()->json($dataPendapatan);
 
-        $dataBiaya = TransaksiKeuangan::with(['kodeRekening', 'buktiTransaksi'])
-            ->select('transaksi_keuangan.*', 'keterangan_transaksi.tanggal_transaksi', 'keterangan_transaksi.keterangan', 'kode_rekening.kode_rek', 'kode_rekening.nama_rek', 'transaksi_keuangan.debet', 'transaksi_keuangan.kredit')
-            ->join('keterangan_transaksi', 'transaksi_keuangan.no_akun', '=', 'keterangan_transaksi.bukti_transaksi')
-            ->join('kode_rekening', 'transaksi_keuangan.account_number', '=', 'kode_rekening.kode_rek')
-            ->where('transaksi_keuangan.index_unit', 0)
-            ->orderBy('kode_rekening.kode_rek', 'asc')
-            ->get();
+        $modalAkhir = $dataModal->sum('saldo_awal') + $labaBersih + $dataPendapatan->sum('saldo_awal');
+        // dd($modalAkhir);
 
-        // Menghitung total debet dan kredit dari data yang diambil
-        $totalPendapatan = $dataPendapatan->sum('kredit');
-        $totalBiaya = $dataBiaya->sum('debet');
-
-        // Untuk debugging, gunakan dd($data); atau Log::info($data);
-        // dd($data);
-        // Log::info($data);
-
-        // Memilih salah satu return statement, JSON atau view
-        // return response()->json($totalBiaya);
-        return view('laporan.perubahan-modal', compact('dataModal', 'dataPendapatan', 'dataBiaya', 'totalPendapatan', 'totalBiaya'));
+        return view('laporan.perubahan-modal', compact('dataModal', 'dataPendapatan', 'modalAkhir', 'labaBersih'));
     }
 
     public function indexNeraca()

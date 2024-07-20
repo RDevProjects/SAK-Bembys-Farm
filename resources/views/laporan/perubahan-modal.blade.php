@@ -10,6 +10,10 @@
         .fixed-width {
             width: 20%;
         }
+
+        /* * {
+            border: 1px solid red;
+        } */
     </style>
 </head>
 
@@ -56,19 +60,31 @@
         <table class="mx-auto w-10/12 bg-white border border-black">
             <thead>
                 <tr>
-                    <th class="px-0 py-1">Tambah</th>
+                    <th class="px-10 py-1 text-start">Tambah</th>
                     <th class="px-4 py-1"></th>
                     <th class="px-4 py-1 fixed-width"></th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($dataPendapatan as $item)
+                    <tr>
+                        <td class="px-10 py-0.5 text-start font-bold"></td>
+                        <td class="px-4 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                        <td class="px-4 py-0.5 text-end fixed-width">
+                            <div class="flex justify-between">
+                                <span>Rp.</span>
+                                {{ number_format($item->saldo_awal, 0, ',', '.') }}
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
                 <tr>
-                    <td class="px-10 py-0.5 text-start fixed-width"></td>
-                    <td class="px-4 py-0.5 text-center">Laba Bersih</td>
+                    <td class="px-10 py-0.5 text-start font-bold"></td>
+                    <td class="px-4 py-0.5 text-start">Laba Bersih</td>
                     <td class="px-4 py-0.5 text-end fixed-width">
                         <div class="flex justify-between">
                             <span>Rp.</span>
-                            {{ number_format($dataPendapatan->sum('kredit') - $dataBiaya->sum('debet'), 0, ',', '.') }}
+                            {{ number_format($labaBersih, 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
@@ -85,14 +101,12 @@
             <tbody>
                 <tr>
                     <td class="px-10 py-0.5 text-start font-bold">Modal Akhir</td>
-                    @foreach ($dataModal as $item)
-                        <td class="px-4 py-0.5 text-end fixed-width">
-                            <div class="flex justify-between">
-                                <span>Rp.</span>
-                                {{ number_format($item->saldo_awal + $dataPendapatan->sum('kredit') - $dataBiaya->sum('debet'), 0, ',', '.') }}
-                            </div>
-                        </td>
-                    @endforeach
+                    <td class="px-4 py-0.5 text-end fixed-width">
+                        <div class="flex justify-between">
+                            <span>Rp.</span>
+                            {{ number_format($modalAkhir, 0, ',', '.') }}
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
