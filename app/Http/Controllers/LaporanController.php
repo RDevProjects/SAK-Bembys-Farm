@@ -74,6 +74,7 @@ class LaporanController extends Controller
             return [
                 'kode_rek' => $item->kode_rek,
                 'nama_rek' => $item->nama_rek,
+                'kelompok_rek' => $item->kelompok_rek,
                 'debet' => $item->tipe_rek === 'DEBET' ? $saldo : 0,
                 'kredit' => $item->tipe_rek === 'KREDIT' ? $saldo : 0,
             ];
@@ -82,8 +83,12 @@ class LaporanController extends Controller
         $totalDebet = $result->sum('debet');
         $totalKredit = $result->sum('kredit');
 
+        // Store the final balances in session
+        session(['neracaSaldoAkhir' => $result]);
+
         return view('laporan.neraca-saldo', compact('result', 'totalDebet', 'totalKredit'));
     }
+
 
     public function indexLabaRugi()
     {
@@ -164,37 +169,41 @@ class LaporanController extends Controller
         // return response()->json($dataPendapatan);
 
         $modalAkhir = $dataModal->sum('saldo_awal') + $labaBersih + $dataPendapatan->sum('saldo_awal');
-        // dd($modalAkhir);
+
+        session(['modalAkhir' => $modalAkhir]);
+        // dd(session('modalAkhir'));
 
         return view('laporan.perubahan-modal', compact('dataModal', 'dataPendapatan', 'modalAkhir', 'labaBersih'));
     }
 
     public function indexNeraca()
     {
-        // Fetch data for each category
-        $aktivaLancar = $this->getFinancialDataByGroup('Aktiva Lancar');
-        $aktivaLancarTotal = $aktivaLancar->sum('saldo_awal');
+        $modalAkhir = session('modalAkhir');
+        $dataSaldoAkhir = session('neracaSaldoAkhir');
 
-        $aktivaTetap = $this->getFinancialDataByGroup('Aktiva Tetap');
-        $aktivaTetapTotal = $aktivaTetap->sum('saldo_awal');
+        $aktivaLancar = $this->getFinancialDataByGroupFromSession($dataSaldoAkhir, 'Aktiva Lancar');
+        $aktivaLancarTotal = $this->calculateTotal($aktivaLancar);
 
-        $aktivaLainLain = $this->getFinancialDataByGroup('Aktiva Lain-Lain');
-        $aktivaLainLainTotal = $aktivaLainLain->sum('saldo_awal');
+        $aktivaTetap = $this->getFinancialDataByGroupFromSession($dataSaldoAkhir, 'Aktiva Tetap');
+        $aktivaTetapTotal = $this->calculateTotal($aktivaTetap);
+
+        $aktivaLainLain = $this->getFinancialDataByGroupFromSession($dataSaldoAkhir, 'Aktiva Lain-Lain');
+        $aktivaLainLainTotal = $this->calculateTotal($aktivaLainLain);
 
         $totalSemua = $aktivaLancarTotal + $aktivaTetapTotal + $aktivaLainLainTotal;
 
-        $hutangJangkaPendek = KodeRekening::where('kelompok_rek', 'Hutang Jangka Pendek')->get();
-        $jumlahHutangJangkaPendek = $hutangJangkaPendek->sum('saldo_awal');
+        $hutangJangkaPendek = $this->getFinancialDataByGroupFromSession($dataSaldoAkhir, 'Hutang Jangka Pendek');
+        $jumlahHutangJangkaPendek = $this->calculateTotal($hutangJangkaPendek);
 
-        $hutangJangkaPanjang = KodeRekening::where('kelompok_rek', 'Hutang Jangka Panjang')->get();
-        $jumlahHutangJangkaPanjang = $hutangJangkaPanjang->sum('saldo_awal');
+        $hutangJangkaPanjang = $this->getFinancialDataByGroupFromSession($dataSaldoAkhir, 'Hutang Jangka Panjang');
+        $jumlahHutangJangkaPanjang = $this->calculateTotal($hutangJangkaPanjang);
 
         $totalKewajiban = $jumlahHutangJangkaPendek + $jumlahHutangJangkaPanjang;
 
-        $modal = KodeRekening::where('kelompok_rek', 'Modal')->get();
-        $jumlahModal = $modal->sum('saldo_awal');
+        $modal = $this->getFinancialDataByGroupFromSession($dataSaldoAkhir, 'Modal');
+        $jumlahModal = $this->calculateTotal($modal);
 
-        $totalPasiva = $totalKewajiban + $jumlahModal;
+        $totalPasiva = $totalKewajiban + $modalAkhir;
 
         // Mendapatkan bulan saat ini
         $currentMonth = Carbon::now()->format('m');
@@ -209,25 +218,31 @@ class LaporanController extends Controller
         // Membulatkan laba bersih ke angka terdekat
         $labaBersihRounded = round($labaBersih, -3);
 
-        //dd($labaBersihRounded);
-
-        return view('laporan.neraca', compact('aktivaLancar', 'aktivaLancarTotal', 'aktivaTetap', 'aktivaTetapTotal', 'aktivaLainLain', 'aktivaLainLainTotal', 'totalSemua', 'hutangJangkaPendek', 'jumlahHutangJangkaPendek', 'hutangJangkaPanjang', 'jumlahHutangJangkaPanjang', 'totalKewajiban', 'modal', 'jumlahModal', 'totalPasiva', 'labaBersihRounded'));
+        return view('laporan.neraca', compact('aktivaLancar', 'aktivaLancarTotal', 'aktivaTetap', 'aktivaTetapTotal', 'aktivaLainLain', 'aktivaLainLainTotal', 'totalSemua', 'hutangJangkaPendek', 'jumlahHutangJangkaPendek', 'hutangJangkaPanjang', 'jumlahHutangJangkaPanjang', 'totalKewajiban', 'modal', 'jumlahModal', 'totalPasiva', 'labaBersihRounded', 'modalAkhir'));
     }
 
-    private function getFinancialDataByGroup($group)
+    private function getFinancialDataByGroupFromSession($data, $group)
     {
-        $data = KodeRekening::where('kelompok_rek', $group)->get();
-
-        // Adjust saldo_awal based on tipe_rek
-        $data->transform(function($item) {
-            if ($item->tipe_rek == 'KREDIT') {
-                $item->saldo_awal = -1 * $item->saldo_awal;
-            }
-            return $item;
+        return collect($data)->filter(function ($item) use ($group) {
+            return $item['kelompok_rek'] === $group;
         });
-
-        return $data;
     }
+
+    private function calculateTotal($data)
+    {
+        return $data->sum(function ($item) {
+            if ($item['kelompok_rek'] === 'Hutang Jangka Pendek') {
+                return $item['kredit'] - $item['debet'];
+            } elseif ($item['kelompok_rek'] === 'Modal') {
+                return $item['kredit'] - $item['debet'];
+            } elseif ($item['kelompok_rek'] === 'Hutang Jangka Panjang') {
+                return $item['kredit'] - $item['debet'];
+            } else {
+                return $item['debet'] - $item['kredit'];
+            }
+        });
+    }
+
 
     public function indexArusKas()
     {

@@ -46,16 +46,15 @@
                     <tbody>
                         @foreach ($aktivaLancar as $item)
                             <tr>
-                                <td class="px-3 py-0.5 text-start"> {{ $item->kode_rek }}</td>
-                                <td class="px-3 py-0.5 text-start"> {{ $item->nama_rek }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['kode_rek'] }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                                 <td class="px-4 py-0.5 text-end fixed-width">
                                     <div class="flex justify-between">
                                         <span>Rp.</span>
-                                        {{ number_format($item->saldo_awal, 0, ',', '.') }}
+                                        {{ number_format($item['debet'] - $item['kredit'], 0, ',', '.') }}
                                     </div>
                                 </td>
-                                <td class="">
-                                </td>
+                                <td></td>
                             </tr>
                         @endforeach
                         <tr>
@@ -74,23 +73,22 @@
                     <thead>
                         <tr>
                             <th class="px-3 py-1 w-1/5 text-start" colspan="2">AKTIVA TETAP</th>
-                            <th class="px-0 py-1"></th>
+                            <th class="px-4 py-1 fixed-width"></th>
                             <th class="px-4 py-1 fixed-width"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($aktivaTetap as $item)
                             <tr>
-                                <td class="px-3 py-0.5 text-start">{{ $item->kode_rek }}</td>
-                                <td class="px-3 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['kode_rek'] }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                                 <td class="px-4 py-0.5 text-end fixed-width">
                                     <div class="flex justify-between">
                                         <span>Rp.</span>
-                                        {{ number_format($item->saldo_awal, 0, ',', '.') }}
+                                        {{ number_format($item['debet'] - $item['kredit'], 0, ',', '.') }}
                                     </div>
                                 </td>
-                                <td class="">
-                                </td>
+                                <td></td>
                             </tr>
                         @endforeach
                         <tr>
@@ -109,23 +107,22 @@
                     <thead>
                         <tr>
                             <th class="px-3 py-1 w-1/5 text-start" colspan="2">AKTIVA LAIN-LAIN</th>
-                            <th class="px-0 py-1"></th>
+                            <th class="px-4 py-1 fixed-width"></th>
                             <th class="px-4 py-1 fixed-width"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($aktivaLainLain as $item)
                             <tr>
-                                <td class="px-3 py-0.5 text-start">{{ $item->kode_rek }}</td>
-                                <td class="px-3 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['kode_rek'] }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                                 <td class="px-4 py-0.5 text-end fixed-width">
                                     <div class="flex justify-between">
                                         <span>Rp.</span>
-                                        {{ number_format($item->saldo_awal, 0, ',', '.') }}
+                                        {{ number_format($item['debet'] - $item['kredit'], 0, ',', '.') }}
                                     </div>
                                 </td>
-                                <td class="">
-                                </td>
+                                <td></td>
                             </tr>
                         @endforeach
                         <tr>
@@ -148,13 +145,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <td class="px-3 py-1 text-start font-bold">Grand Total Aktiva</td>
-                        <td class="px-4 py-1 text-end font-bold">
-                            <div class="flex justify-between">
-                                <span>Rp.</span>
-                                {{ number_format($totalSemua, 0, ',', '.') }}
-                            </div>
-                        </td>
+                        <tr>
+                            <td class="px-3 py-1 text-start font-bold">Grand Total Aset</td>
+                            <td class="px-4 py-1 text-end font-bold">
+                                <div class="flex justify-between">
+                                    <span>Rp.</span>
+                                    {{ number_format($totalSemua, 0, ',', '.') }}
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -162,7 +161,7 @@
                 <table class="mx-auto w-full bg-white border border-black text-sm">
                     <thead>
                         <tr>
-                            <th class="px-3 py-1 w-1/5 text-start" colspan="2">KEWAJIBAN</th>
+                            <th class="px-3 py-1 w-1/5 text-start" colspan="2">LIABILITAS</th>
                             <th class="px-4 py-1 fixed-width"></th>
                             <th class="px-4 py-1 fixed-width"></th>
                         </tr>
@@ -175,20 +174,19 @@
                         </tr>
                         @foreach ($hutangJangkaPendek as $item)
                             <tr>
-                                <td class="px-3 py-0.5 text-start"> {{ $item->kode_rek }}</td>
-                                <td class="px-3 py-0.5 text-start"> {{ $item->nama_rek }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['kode_rek'] }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                                 <td class="px-4 py-0.5 text-end fixed-width">
                                     <div class="flex justify-between">
                                         <span>Rp.</span>
-                                        {{ number_format($item->saldo_awal, 0, ',', '.') }}
+                                        {{ number_format($item['kredit'] - $item['debet'], 0, ',', '.') }}
                                     </div>
                                 </td>
-                                <td class="">
-                                </td>
+                                <td></td>
                             </tr>
                         @endforeach
                         <tr>
-                            <td class="px-3 py-1 text-end font-bold" colspan="2">Jumlah Hutang Jangka Pendek</td>
+                            <td class="px-3 py-1 text-end" colspan="2">Jumlah Hutang Jangka Pendek</td>
                             <td class="px-4 py-1 text-end font-bold" colspan="2">
                                 <div class="flex justify-between">
                                     <span>Rp.</span>
@@ -201,28 +199,27 @@
                 <table class="mx-auto w-full bg-white border border-black text-sm">
                     <thead>
                         <tr>
-                            <th class="px-3 py-1 w-1/5 text-start" colspan="2">Hutang Jangka Panjang</th>
-                            <th class="px-0 py-1"></th>
+                            <th class="px-3 py-1 w-1/5 text-start font-bold" colspan="2">Hutang Jangka Panjang</th>
+                            <th class="px-4 py-1 fixed-width"></th>
                             <th class="px-4 py-1 fixed-width"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($hutangJangkaPanjang as $item)
                             <tr>
-                                <td class="px-3 py-0.5 text-start">{{ $item->kode_rek }}</td>
-                                <td class="px-3 py-0.5 text-start">{{ $item->nama_rek }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['kode_rek'] }}</td>
+                                <td class="px-3 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                                 <td class="px-4 py-0.5 text-end fixed-width">
                                     <div class="flex justify-between">
                                         <span>Rp.</span>
-                                        {{ number_format($item->saldo_awal, 0, ',', '.') }}
+                                        {{ number_format($item['kredit'] - $item['debet'], 0, ',', '.') }}
                                     </div>
                                 </td>
-                                <td class="">
-                                </td>
+                                <td></td>
                             </tr>
                         @endforeach
                         <tr>
-                            <td class="px-3 py-1 text-end font-bold" colspan="2">Jumlah Hutang Jangka Panjang</td>
+                            <td class="px-3 py-1 text-end" colspan="2">Jumlah Hutang Jangka Panjang</td>
                             <td class="px-4 py-1 text-end font-bold" colspan="2">
                                 <div class="flex justify-between">
                                     <span>Rp.</span>
@@ -231,7 +228,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-3 py-1 text-start font-bold" colspan="2">Jumlah Kewajiban</td>
+                            <td class="px-3 py-1 text-start font-bold" colspan="2">Total Liabilitas</td>
                             <td class="px-4 py-1 text-end font-bold" colspan="2">
                                 <div class="flex justify-between">
                                     <span>Rp.</span>
@@ -244,45 +241,29 @@
                 <table class="mx-auto w-full bg-white border border-black text-sm">
                     <thead>
                         <tr>
-                            <th class="px-3 py-1 w-1/5 text-start" colspan="2">MODAL</th>
-                            <th class="px-0 py-1"></th>
+                            <th class="px-3 py-1 w-1/5 text-start font-bold" colspan="2">Modal</th>
+                            <th class="px-4 py-1 fixed-width"></th>
                             <th class="px-4 py-1 fixed-width"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($modal as $item)
-                            <tr>
-                                <td class="px-3 py-0.5 text-start">{{ $item->kode_rek }}</td>
-                                <td class="px-3 py-0.5 text-start">{{ $item->nama_rek }}</td>
-                                <td class="px-4 py-0.5 text-end fixed-width">
-                                    <div class="flex justify-between">
-                                        <span>Rp.</span>
-                                        {{ number_format($item->saldo_awal, 0, ',', '.') }}
-                                    </div>
-                                </td>
-                                <td class="">
-                                </td>
-                            </tr>
-                        @endforeach
                         <tr>
-                            <td class="px-3 py-0.5 text-start"></td>
-                            <td class="px-3 py-0.5 text-start">Laba/Rugi bulan ini</td>
+                            <td class="px-3 py-0.5 text-start">3110</td>
+                            <td class="px-3 py-0.5 text-start">Modal</td>
                             <td class="px-4 py-0.5 text-end fixed-width">
                                 <div class="flex justify-between">
                                     <span>Rp.</span>
-                                    {{ number_format($labaBersihRounded, 0, ',', '.') }}
+                                    {{ number_format($modalAkhir, 0, ',', '.') }}
                                 </div>
                             </td>
-                            <td class="">
-                            </td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td class="px-3 py-1 text-start font-bold">Jumlah Modal</td>
+                            <td class="px-3 py-1 text-end" colspan="2">Jumlah Modal</td>
                             <td class="px-4 py-1 text-end font-bold" colspan="2">
                                 <div class="flex justify-between">
                                     <span>Rp.</span>
-                                    {{ number_format($jumlahModal, 0, ',', '.') }}
+                                    {{ number_format($modalAkhir, 0, ',', '.') }}
                                 </div>
                             </td>
                         </tr>
@@ -296,13 +277,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <td class="px-3 py-1 text-start font-bold">Grand Total Pasiva</td>
-                        <td class="px-4 py-1 text-end font-bold">
-                            <div class="flex justify-between">
-                                <span>Rp.</span>
-                                {{ number_format($totalPasiva, 0, ',', '.') }}
-                            </div>
-                        </td>
+                        <tr>
+                            <td class="px-3 py-1 text-start font-bold">Grand Total Liabilitas dan Modal</td>
+                            <td class="px-4 py-1 text-end font-bold">
+                                <div class="flex justify-between">
+                                    <span>Rp.</span>
+                                    {{ number_format($totalPasiva, 0, ',', '.') }}
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
