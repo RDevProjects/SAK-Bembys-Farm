@@ -218,7 +218,7 @@
                     }
                 ],
                 scrollX: true,
-                scrollY: '63vh',
+                scrollY: true,
                 scroller: true
             });
         });
