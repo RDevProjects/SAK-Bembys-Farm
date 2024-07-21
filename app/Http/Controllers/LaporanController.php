@@ -205,20 +205,24 @@ class LaporanController extends Controller
 
         $totalPasiva = $totalKewajiban + $modalAkhir;
 
-        // Mendapatkan bulan saat ini
-        $currentMonth = Carbon::now()->format('m');
-
-        // Menghitung jumlah kredit dan debet untuk bulan saat ini
-        $totalKredit = TransaksiKeuangan::whereMonth('created_at', $currentMonth)->sum('kredit');
-        $totalDebet = TransaksiKeuangan::whereMonth('created_at', $currentMonth)->sum('debet');
-
-        // Menghitung laba bersih
-        $labaBersih = $totalKredit - $totalDebet;
-
-        // Membulatkan laba bersih ke angka terdekat
-        $labaBersihRounded = round($labaBersih, -3);
-
-        return view('laporan.neraca', compact('aktivaLancar', 'aktivaLancarTotal', 'aktivaTetap', 'aktivaTetapTotal', 'aktivaLainLain', 'aktivaLainLainTotal', 'totalSemua', 'hutangJangkaPendek', 'jumlahHutangJangkaPendek', 'hutangJangkaPanjang', 'jumlahHutangJangkaPanjang', 'totalKewajiban', 'modal', 'jumlahModal', 'totalPasiva', 'labaBersihRounded', 'modalAkhir'));
+        return view('laporan.neraca', compact(
+            'aktivaLancar',
+            'aktivaLancarTotal',
+            'aktivaTetap',
+            'aktivaTetapTotal',
+            'aktivaLainLain',
+            'aktivaLainLainTotal',
+            'totalSemua',
+            'hutangJangkaPendek',
+            'jumlahHutangJangkaPendek',
+            'hutangJangkaPanjang',
+            'jumlahHutangJangkaPanjang',
+            'totalKewajiban',
+            'modal',
+            'jumlahModal',
+            'totalPasiva',
+            'modalAkhir'
+        ));
     }
 
     private function getFinancialDataByGroupFromSession($data, $group)
@@ -242,7 +246,6 @@ class LaporanController extends Controller
             }
         });
     }
-
 
     public function indexArusKas()
     {
