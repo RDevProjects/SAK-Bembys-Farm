@@ -27,7 +27,7 @@
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Arus Kas</a>
                             <a href="{{ route('laporan-jurnal-penutup') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Jurnal Penutup</a>
-                            <a href="{{ route('laporan-arus-kas') }}" target="_blank"
+                            <a href="{{ route('laporan-neraca-saldo-penutup') }}" target="_blank"
                                 class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Laporan Neraca Saldo Setelah
                                 Penutupan</a>
                         </div>

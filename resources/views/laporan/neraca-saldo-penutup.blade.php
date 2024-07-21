@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neraca Saldo Akhir</title>
+    <title>Neraca Saldo Setelah Penutupan</title>
     @vite(['resources/css/app.css', 'resources/css/theme.css'])
 </head>
 
@@ -21,13 +21,13 @@
             </div>
             <hr class="border-t-2 border-gray-900 my-1">
             <hr class="border-t-4 border-gray-900">
-            <h3 class="font-bold text-lg mt-4">Neraca Saldo Akhir</h3>
+            <h3 class="font-bold text-lg mt-4">Neraca Saldo Setelah Penutupan</h3>
             <p class="mb-5">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
         </div>
         <table class="mx-auto w-10/12 bg-white border border-black">
             <thead>
                 <tr>
-                    <th class="border border-black px-0 py-1">KODE REKENING</th>
+                    <th class="border border-black px-0 py-1">TANGGAL</th>
                     <th class="border border-black px-4 py-1">NAMA REKENING</th>
                     <th class="border border-black px-4 py-1">DEBET</th>
                     <th class="border border-black px-4 py-1">KREDIT</th>
@@ -36,7 +36,7 @@
             <tbody>
                 @foreach ($result as $item)
                     <tr>
-                        <td class="border border-black px-4 py-0.5 text-center">{{ $item['kode_rek'] }}</td>
+                        <td class="border border-black px-4 py-0.5 text-center">31 Mei 2024</td>
                         <td class="border border-black px-4 py-0.5 text-start">{{ $item['nama_rek'] }}</td>
                         <td class="border border-black px-4 py-0.5 text-end">
                             <div class="flex justify-between">
