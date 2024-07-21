@@ -49,3 +49,7 @@ Route::get('/laporan-perubahan-modal', [LaporanController::class, 'indexPerubaha
 Route::get('/laporan-neraca', [LaporanController::class, 'indexNeraca'])->name('laporan-neraca');
 
 Route::get('/laporan-arus-kas', [LaporanController::class, 'indexArusKas'])->name('laporan-arus-kas');
+
+Route::get('/laporan-jurnal-penutup', [LaporanController::class, 'indexJurnalPenutup'])->name('laporan-jurnal-penutup');
+
+Route::get('/laporan-neraca-saldo-penutup', [LaporanController::class, 'indexNeracaSaldoPenutup'])->name('laporan-neraca-saldo-penutup');

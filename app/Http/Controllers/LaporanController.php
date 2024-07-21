@@ -128,6 +128,8 @@ class LaporanController extends Controller
             ];
         })->values();
 
+        session(['dataPendapatan' => $dataPendapatan]);
+
         $dataHargaPokokPenjualan = $dataHargaPokokPenjualan->groupBy('account_number')->map(function ($group) {
             return [
                 'account_number' => $group[0]->account_number,
@@ -136,6 +138,8 @@ class LaporanController extends Controller
             ];
         })->values();
 
+        session(['dataHargaPokokPenjualan' => $dataHargaPokokPenjualan]);
+
         $dataBeban = $dataBeban->groupBy('account_number')->map(function ($group) {
             return [
                 'account_number' => $group[0]->account_number,
@@ -143,6 +147,8 @@ class LaporanController extends Controller
                 'saldo' => $group->sum('debet'),
             ];
         })->values();
+
+        session(['dataBeban' => $dataBeban]);
 
         return view('laporan.laba-rugi', compact(
             'dataPendapatan',
@@ -294,6 +300,24 @@ class LaporanController extends Controller
             'totalKenaikanKas',
             'kasAwalBulanMei2024',
             'kasAkhirBulanMei2024'
+        ));
+    }
+
+    public function indexJurnalPenutup()
+    {
+        $labaBersih = session('labaBersih');
+        $dataPendapatan = session('dataPendapatan');
+        $dataHargaPokokPenjualan = session('dataHargaPokokPenjualan');
+        $dataBeban = session('dataBeban');
+
+        // dd($dataPendapatan, $dataHargaPokokPenjualan, $dataBeban, $labaBersih);
+
+
+        return view('laporan.jurnal-penutup', compact(
+            'dataPendapatan',
+            'dataHargaPokokPenjualan',
+            'dataBeban',
+            'labaBersih'
         ));
     }
 
