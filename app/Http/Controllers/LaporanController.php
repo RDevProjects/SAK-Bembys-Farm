@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\KodeRekening;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\TransaksiKeuangan;
+use Illuminate\Support\Facades\DB;
+use App\Models\KeteranganTransaksi;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class LaporanController extends Controller
 {
@@ -364,13 +366,102 @@ class LaporanController extends Controller
                 'kredit' => $item->tipe_rek === 'KREDIT' ? $saldo : 0,
             ];
         });
-
+        // dd($result);
         // return response()->json($result);
         $totalDebet = $result->sum('debet');
         $totalKredit = $result->sum('kredit');
         // dd($totalDebet, $totalKredit);
         return view('laporan.neraca-saldo-penutup', compact('result', 'totalDebet', 'totalKredit'));
     }
+
+    public function penutupanAkuntansi()
+    {
+        $labaBersih = session('labaBersih');
+        // dd($labaBersih);
+        // Fetch all KodeRekening
+        $data = KodeRekening::whereNotIn('kelompok_rek', ['Beban', 'Pendapatan'])->get();
+
+        $result = $data->map(function($item) use ($labaBersih){
+            // Fetch transactions for the current kode_rek
+            $transaksiKeuangans = TransaksiKeuangan::with('buktiTransaksi')
+                ->where('account_number', $item->kode_rek)
+                ->get();
+
+            // Calculate the final balance
+            $saldo = $item->saldo_awal;
+            foreach ($transaksiKeuangans as $transaksi) {
+                if ($item->tipe_rek === 'DEBET') {
+                    $saldo += $transaksi->debet;
+                    $saldo -= $transaksi->kredit;
+                } else {
+                    $saldo -= $transaksi->debet;
+                    $saldo += $transaksi->kredit;
+                }
+            }
+
+            if ($item->kode_rek == 3310) {
+                return [
+                    'kode_rek' => $item->kode_rek,
+                    'nama_rek' => $item->nama_rek,
+                    'kelompok_rek' => $item->kelompok_rek,
+                    'saldo' => $saldo + $labaBersih,
+                ];
+            }
+
+            return [
+                'kode_rek' => $item->kode_rek,
+                'nama_rek' => $item->nama_rek,
+                'kelompok_rek' => $item->kelompok_rek,
+                'saldo' => $saldo
+            ];
+        });
+        // dd($result);
+        // return response()->json($result);
+        // dd($totalDebet, $totalKredit);
+        return view('penutupan', compact('result', 'labaBersih'));
+    }
+
+    public function prosesPenutupanAkuntansi(Request $request)
+    {
+        // Ambil data dari form
+        $result = $request->input('result');
+
+        try {
+            // Gunakan transaksi database untuk memastikan atomicity
+            DB::beginTransaction();
+
+            // Perbarui data di KodeRekening
+            foreach ($result as $item) {
+                KodeRekening::where('kode_rek', $item['kode_rek'])->update(['saldo_awal' => $item['saldo']]);
+            }
+
+            // Matikan foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+            // Hapus semua data dari TransaksiKeuangan
+            TransaksiKeuangan::truncate();
+
+            // Hapus semua data dari KeteranganTransaksi
+            KeteranganTransaksi::truncate();
+
+            // Hidupkan kembali foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            // Commit transaksi
+            DB::commit();
+            session()->flush(); // Reset all sessions
+
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollBack();
+            session()->flush(); // Reset all sessions
+            return redirect()->back()->with('message', 'Proses penutupan buku berhasil dilakukan.');
+            // return redirect()->back()->with('message', 'Proses penutupan buku gagal: ' . $e->getMessage() . ' on line ' . $e->getLine());
+        }
+
+        return redirect()->back()->with('message', 'Proses penutupan buku berhasil dilakukan.');
+    }
+
 
     public function getDataJurnalUmumJson()
     {

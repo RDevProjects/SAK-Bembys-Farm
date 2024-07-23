@@ -35,6 +35,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-span-2 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="sm:flex block justify-between mb-5">
+                        <h4 class="text-gray-600 text-lg font-semibold sm:mb-0 mb-2">Penutupan
+                        </h4>
+                    </div>
+                    <div class="">
+                        <div class="grid grid-cols-3 gap-4">
+                            <a href="{{ route('tutup-buku') }}" target="_blank"
+                                class="bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded">Tutup Buku</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Main Content End -->
 @endsection

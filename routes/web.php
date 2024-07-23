@@ -31,6 +31,9 @@ Route::post('/entry-unit/storeNamaUnit', [UnitController::class, 'store'])->name
 Route::get('/entry-unit/edit/{id}', [UnitController::class, 'edit'])->name('entry-jurnal.editNamaUnit');
 Route::put('/entry-unit/update/{id}', [UnitController::class, 'update'])->name('entry-jurnal.updateNamaUnit');
 
+Route::get('/tutup-buku', [LaporanController::class, 'penutupanAkuntansi'])->name('tutup-buku');
+Route::post('/penutupan-akuntansi', [LaporanController::class, 'prosesPenutupanAkuntansi'])->name('penutupan-akuntansi');
+
 Route::get('/tampil-jurnal', [TransaksiKeuanganController::class, 'tampilJurnal'])->name('tampil-jurnal');
 
 // Laporan
