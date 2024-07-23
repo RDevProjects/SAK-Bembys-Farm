@@ -312,8 +312,9 @@ class LaporanController extends Controller
         $dataHargaPokokPenjualan = session('dataHargaPokokPenjualan');
         $dataBeban = session('dataBeban');
 
-        // dd($dataPendapatan, $dataHargaPokokPenjualan, $dataBeban, $labaBersih);
-
+        if (!$labaBersih || !$dataPendapatan || !$dataHargaPokokPenjualan || !$dataBeban) {
+            return redirect()->back();
+        }
 
         return view('laporan.jurnal-penutup', compact(
             'dataPendapatan',
