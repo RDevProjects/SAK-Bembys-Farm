@@ -5,51 +5,51 @@
     <!-- ---------------------------------- -->
     <div class="p-5">
 
-        <a href="../" class="text-nowrap flex">
+        <a href="../" class="flex text-nowrap">
             <img src="{{ asset('logo.png') }}" alt="Logo-Dark" class="w-1/5" />
-            <span class="m-auto font-bold text-lg">Bemby's Farm</span>
+            <span class="m-auto text-lg font-bold">Bemby's Farm</span>
         </a>
 
     </div>
     <div class="scroll-sidebar" data-simplebar="">
         <div class="px-6 mt-0">
-            <nav class=" w-full flex flex-col sidebar-nav">
-                <ul id="sidebarnav" class="text-gray-600 text-sm">
-                    <li class="text-xs font-bold pb-4">
-                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+            <nav class="flex flex-col w-full  sidebar-nav">
+                <ul id="sidebarnav" class="text-sm text-gray-600">
+                    <li class="pb-4 text-xs font-bold">
+                        <i class="hidden text-lg text-center ti ti-dots nav-small-cap-icon"></i>
                         <span>HOME</span>
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link gap-3 py-2 px-3 rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        <a class="flex items-center w-full gap-3 px-3 py-2 rounded-md sidebar-link hover:text-blue-600 hover:bg-blue-500"
                             href="{{ route('home') }}">
-                            <i class="ti ti-layout-dashboard text-xl"></i> <span>Dashboard</span>
+                            <i class="text-xl ti ti-layout-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>
 
-                    <li class="text-xs font-bold mb-4 mt-8">
-                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+                    <li class="mt-8 mb-4 text-xs font-bold">
+                        <i class="hidden text-lg text-center ti ti-dots nav-small-cap-icon"></i>
                         <span>File</span>
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        <a class="flex items-center w-full gap-3 px-3 py-2 rounded-md sidebar-link hover:text-blue-600 hover:bg-blue-500"
                             href="{{ route('data-rekening') }}">
-                            <i class="ti ti-article  text-xl"></i> <span>Data Rekening</span>
+                            <i class="text-xl ti ti-article"></i> <span>Data Rekening</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        <a class="flex items-center w-full gap-3 px-3 py-2 rounded-md sidebar-link hover:text-blue-600 hover:bg-blue-500"
                             href="{{ route('entry-jurnal.showNamaUnit') }}">
-                            <i class="ti ti-building-community  text-xl"></i> <span>Entry Unit</span>
+                            <i class="text-xl ti ti-building-community"></i> <span>Entry Unit</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        <a class="flex items-center w-full gap-3 px-3 py-2 rounded-md sidebar-link hover:text-blue-600 hover:bg-blue-500"
                             href="{{ route('entry-jurnal') }}">
-                            <i class="ti ti-notes  text-xl"></i> <span>Entry Jurnal</span>
+                            <i class="text-xl ti ti-notes"></i> <span>Entry Jurnal</span>
                         </a>
                     </li>
                 </ul>
@@ -57,13 +57,14 @@
         </div>
     </div>
 
+    <p class="hidden">Copyright 21230001 Balqis Batrisiya Santoso</p>
     <!-- Bottom Upgrade Option -->
-    {{-- <div class="m-6  relative">
-    <div class="bg-blue-500 p-5 rounded-md flex items-center justify-between">
+    {{-- <div class="relative m-6">
+    <div class="flex items-center justify-between p-5 bg-blue-500 rounded-md">
         <div>
-            <h5 class="text-base font-semibold text-gray-700 mb-3">Upgrade to Pro</h5>
+            <h5 class="mb-3 text-base font-semibold text-gray-700">Upgrade to Pro</h5>
             <button
-                class="text-xs font-semibold hover:bg-blue-700 text-white bg-blue-600 rounded-md  px-4 py-2">Buy
+                class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700">Buy
                 Pro</button>
         </div>
         <div class="-mt-12 -mr-2">
